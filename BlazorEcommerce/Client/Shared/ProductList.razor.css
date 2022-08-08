@@ -1,6 +1,5 @@
 ﻿.media-img {
 
-
     max-height : 200px;
     max-width : 200px;
     border-radius : 6px;
@@ -9,13 +8,24 @@
 
 }
 
-    .media-img:hover {
+.media-img:hover {
 
         transform:scale(1.1)
 
     }
 
+.media {
 
+display:flex;
+align-items:flex-start
+
+}
+
+.media-body {
+
+flex:1;
+
+}
 
 
 .media-img-wrapper {
