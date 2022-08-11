@@ -6,5 +6,7 @@
 
         Task GetProducts();
 
+        Task<ServiceResponse<Product>> GetProductByIdAsync(int productId);
+
     }
 }
