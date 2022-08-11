@@ -1,14 +1,12 @@
 ﻿@page "/product/{id:int}"
 @inject IProductService ProductService 
 
-<h3>@product.Title</h3>
+
 
 
 @if (product == null)
 {
-
-    <p><em>@message2</em></p>
-
+    <span>@message</span>
 
 }else{
 
@@ -20,8 +18,9 @@
     </div>
    
     <div class="media-body">
+        <h2 class="mb-0">@product.Title</h2><br>
         <p> @product.Description</p>
-        <p> Quantity : @product.Quantity</p><br>
+        <p><b> Quantity : @product.Quantity </b></p><br>
         <h4 class="price">
 
             R @product.Price
@@ -40,21 +39,21 @@
 
 @code {
     private Product? product = null;
-    private string message2 = string.Empty;
+    private string message = string.Empty;
 
     [Parameter]
     public int Id {get;set;}
 
     protected override async Task OnParametersSetAsync() {
 
-        message2 = "Loading product...";
+        message = "Loading product...";
 
         var result = await ProductService.GetProductByIdAsync(Id);
 
         if (!result.Success)
         {
 
-            message2 = result.Message;
+            message = result.Message;
 
         }
         else

@@ -12,25 +12,23 @@
 
    @foreach (var product in productService.Products)
    {
-       <li class="media my-3">
-
-           <div class="media-img-wrapper mr-2">
-               <a href="/product/@product.Id">
-               <img class="media-img" src="@product.ImageUrl" title="@product.Title">
-               </a>
-           </div>
-           <div class="media-body">
-               <a href="/product/@product.Id">
-
-                   <h4 class="mb-0"> @product.Title</h4>
-
-               </a><br>
-
-               <p> @product.Description</p><br>
-
-           </div>
-
-       </li>
+                   <li class="media my-3">
+                <div class="media-img-wrapper mr-2">
+                    <a href="/product/@product.Id">
+                       
+                            <img class="media-img" src="@product.ImageUrl" alt="@product.Title" />
+                      
+                    
+                    </a>
+                </div>
+                <div class="media-body">
+                    <a href="/product/@product.Id">
+                        <h4 class="mb-0">@product.Title</h4><br>
+                    </a>
+                    <p>@product.Description</p>
+               
+                </div>
+            </li>
    }
 
 
