@@ -26,6 +26,5 @@ namespace BlazorEcommerce.Shared
 
         public int CategoryId { get; set; }
 
-
     }
 }
