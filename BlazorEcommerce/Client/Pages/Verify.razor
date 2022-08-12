@@ -1,0 +1,24 @@
+﻿@page "/verify"
+@inject IUserService UserService
+@inject HttpClient Http
+
+<h3>Login</h3><br />
+
+<EditForm Model="verify" OnSubmit="Verification">
+    <div class="form-group">
+        <label for="Token">Token</label><br />
+        <InputText id="Token" @bind-Value="verify.Token" class="form-control" />
+    </div><br />
+
+    <button type="submit" class="btn btn-primary">Verify Account</button>
+</EditForm>
+
+@code {
+    private VerifyModel verify = new VerifyModel();
+
+    private async void Verification()
+    {
+        await UserService.VerifyAsync(verify.Token);
+
+    }
+}

@@ -8,41 +8,20 @@ namespace BlazorEcommerce.Server.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly IUserService _userService;
 
-        public UserController(DataContext context)
+        public UserController(IUserService userService)
         {
-            _context = context;
+            _userService = userService;
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserRegisterRequest request) {
 
-            if (_context.Users.Any(u => u.Email == request.Email)) {
+            var result = await _userService.AddUserAsync(request);
 
-                return BadRequest("User already exists");
-            
-            }
+            return Ok(result);
 
-            CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
-
-
-            var user = new User
-            {
-
-                Email = request.Email,
-                PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt,
-                VerificationToken = CreateRandomToken()
-
-            };
-
-
-            _context.Users.Add(user);
-
-            await _context.SaveChangesAsync();
-
-            return Ok("User successfully created");
 
         }
 
@@ -51,30 +30,10 @@ namespace BlazorEcommerce.Server.Controllers
         public async Task<IActionResult> Login(UserLoginRequest request)
         {
 
-           var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
+            var result = await _userService.LoginAsync(request);
 
-            if (user == null) {
+            return Ok(result);
 
-                return BadRequest("User not found");
-            
-            }
-
-            if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
-            {
-
-                return BadRequest("Password is incorrect");
-
-            }
-
-            if (user.VerifiedAt == null) {
-
-
-                return BadRequest("Not verified");
-
-            }
-
-
-            return Ok($"Welcome back, {user.Email}! :)");
         }
 
 
@@ -82,54 +41,11 @@ namespace BlazorEcommerce.Server.Controllers
         public async Task<IActionResult> Verify(string token)
         {
 
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.VerificationToken == token);
+            var result = await _userService.VerifyAsync(token);
 
-            if (user == null)
-            {
-
-                return BadRequest("Invalid token");
-
-            }
-
-            
-            user.VerifiedAt = DateTime.Now;
-            await _context.SaveChangesAsync();
-
-
-            return Ok("User Verified");
+            return Ok(result);
         }
 
-
-
-
-        private void CreatePasswordHash(string passsword, out byte[] passwordHash, out byte[] passwordSalt)
-        {
-
-            using (var hmac = new HMACSHA512())
-            {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(passsword));
-            }
-
-        }
-
-        private bool VerifyPasswordHash(string passsword, byte[] passwordHash, byte[] passwordSalt)
-        {
-
-            using (var hmac = new HMACSHA512(passwordSalt))
-            {
-                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(passsword));
-
-                return computedHash.SequenceEqual(passwordHash);
-            }
-
-        }
-
-        private string CreateRandomToken() {
-
-            return Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
-        
-        }
 
 
     }

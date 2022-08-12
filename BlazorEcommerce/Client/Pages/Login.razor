@@ -1,4 +1,6 @@
 ﻿@page "/login"
+@inject IUserService UserService
+@inject HttpClient Http
 
 <h3>Login</h3><br />
 
@@ -15,11 +17,11 @@
 </EditForm>
 
 @code {
-    private UserRegisterRequest user = new UserRegisterRequest();
+    private UserLoginRequest user = new UserLoginRequest();
 
     private async void HandleLogin()
     {
-        Console.WriteLine("Log me in!");
+        await UserService.LoginAsync(user);
 
     }
 }
