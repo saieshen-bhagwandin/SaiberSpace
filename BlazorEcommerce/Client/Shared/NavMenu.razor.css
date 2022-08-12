@@ -50,6 +50,15 @@
     color: white;
 }
 
+.dropdown-divider {
+
+    color:white;
+    background-color:white;
+    width:220px;
+    margin-left:15px;
+
+}
+
 @media (min-width: 641px) {
     .navbar-toggler {
         display: none;
