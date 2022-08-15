@@ -4,9 +4,9 @@
     {
         public Task<string> AddUserAsync(UserRegisterRequest request);
 
-        public Task<string> LoginAsync(UserLoginRequest request);
+        public Task<User> LoginAsync(UserLoginRequest request);
 
-        public Task<string> VerifyAsync(string token);
+        public Task<string> VerifyAsync(VerifyModel token);
 
 
 

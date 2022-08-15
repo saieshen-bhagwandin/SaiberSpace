@@ -11,30 +11,20 @@ namespace BlazorEcommerce.Server.Controllers
     [ApiController]
     public class EmailController : ControllerBase
     {
+        private readonly IEmailService _emailService;
 
-        [HttpPost]
-        public IActionResult SendEmail(string body) {
+        public EmailController(IEmailService emailService)
+        {
+            _emailService = emailService;
+        }
 
-            try
-            {
-                var email = new MimeMessage();
-                email.From.Add(MailboxAddress.Parse("noel.west94@ethereal.email"));
-                email.To.Add(MailboxAddress.Parse("noel.west94@ethereal.email"));
-                email.Subject = "TESTING SUBJECT";
-                email.Body = new TextPart(TextFormat.Html) { Text = body };
+        [HttpPost("sendemail")]
+        public IActionResult SendEmail(User user) {
 
-                using var smtp = new SmtpClient();
-                smtp.Connect("smtp.ethereal.email", 465, SecureSocketOptions.StartTls);
-                smtp.Authenticate("noel.west94@ethereal.email", "sCtsgx22vnFfxntCxT");
-                smtp.Send(email);
-                smtp.Disconnect(true);
 
-            }
-            catch (Exception ex)
-            {
-                Console.Write(ex.ToString());
+            _emailService.SendEmail(user);
 
-            }
+       
             return Ok();
 
         }

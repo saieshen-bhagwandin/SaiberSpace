@@ -7,7 +7,7 @@
 
         public Task LoginAsync(UserLoginRequest request);
 
-        public Task VerifyAsync(string token);
+        public Task VerifyAsync(VerifyModel token);
 
     }
 }

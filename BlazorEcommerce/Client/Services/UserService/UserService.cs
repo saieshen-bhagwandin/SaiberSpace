@@ -15,18 +15,39 @@ namespace BlazorEcommerce.Client.Services.UserService
         public async Task AddUserAsync(UserRegisterRequest request)
         {
             var result = await _httpClient.PostAsJsonAsync("api/user/register", request);
- 
+
+           
+
         }
 
         public async Task LoginAsync(UserLoginRequest request)
         {
             var result = await _httpClient.PostAsJsonAsync("api/user/login", request);
 
+
+
         }
 
-        public async Task VerifyAsync(string token)
+        public async Task VerifyAsync(VerifyModel token)
         {
-            var result = await _httpClient.PostAsJsonAsync("api/user/verify", token);
+
+
+        
+
+            try
+            {
+            
+                    var result = await _httpClient.PostAsJsonAsync("api/user/verify", token);
+               
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);  
+                throw;
+            }
+           
+
+
         }
     }
 }

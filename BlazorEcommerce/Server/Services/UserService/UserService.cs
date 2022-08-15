@@ -5,10 +5,12 @@ namespace BlazorEcommerce.Server.Services.UserService
     public class UserService : IUserService
     {
         private readonly DataContext _context;
+        private readonly IEmailService _emailService;
 
-        public UserService(DataContext context)
+        public UserService(DataContext context, IEmailService emailService)
         {
             _context = context;
+            _emailService = emailService;
         }
         public async Task<string> AddUserAsync(UserRegisterRequest request)
         {
@@ -34,46 +36,59 @@ namespace BlazorEcommerce.Server.Services.UserService
 
             _context.Users.Add(user);
 
+             _emailService.SendEmail(user);
+
             await _context.SaveChangesAsync();
+
+
+            
+
 
             return "User successfully created";
 
         }
 
-        public async Task<string> LoginAsync(UserLoginRequest request)
+        public async Task<User> LoginAsync(UserLoginRequest request)
         {
 
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
 
             if (user == null)
             {
+                var userinvalid = new User();
 
-                return "User not found";
+                userinvalid.Email = "User not found";
+
+                return userinvalid;
 
             }
-
-            if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
+            else if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
             {
 
-                return "Password is incorrect";
+                var userinvalid = new User();
+
+                userinvalid.Email = "Password is incorrect";
+
+                return userinvalid;
 
             }
-
-            if (user.VerifiedAt == null)
+            else if (user.VerifiedAt == null)
             {
 
 
-                return "Not verified";
+                var userinvalid = new User();
 
-            }
+                userinvalid.Email = "User not verified";
 
+                return userinvalid;
 
-            return $"Welcome back, {user.Email}! :)"; 
+            }else
+            return user; 
         }
 
-        public async Task<string> VerifyAsync(string token)
+        public async Task<string> VerifyAsync(VerifyModel token)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.VerificationToken == token);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.VerificationToken == token.Token);
 
             if (user == null)
             {

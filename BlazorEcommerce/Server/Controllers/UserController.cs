@@ -32,13 +32,19 @@ namespace BlazorEcommerce.Server.Controllers
 
             var result = await _userService.LoginAsync(request);
 
+            if (result.Id == 0) {
+
+                return BadRequest(result.Email);
+
+            }
+
             return Ok(result);
 
         }
 
 
         [HttpPost("verify")]
-        public async Task<IActionResult> Verify(string token)
+        public async Task<IActionResult> Verify(VerifyModel token)
         {
 
             var result = await _userService.VerifyAsync(token);
