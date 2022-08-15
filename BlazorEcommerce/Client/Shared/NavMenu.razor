@@ -1,4 +1,6 @@
 ﻿@inject ICategoryService CategoryService
+@inject ILocalStorageService LocalStorage
+@inject AuthenticationStateProvider AuthStateProvider
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
@@ -28,22 +30,41 @@
        }
  
         <li class="dropdown-divider"></li>
+       
             <div class="nav-item px-3">
-            <NavLink class="nav-link" href="login">
-                 <span class="oi oi-account-login" aria-hidden="true"> </span> Login
-            </NavLink>
+            <AuthorizeView>
+                <NotAuthorized>
+                    <NavLink class="nav-link" href="login">
+                        <span class="oi oi-account-login" aria-hidden="true"></span> Login
+                    </NavLink>
+                </NotAuthorized>
+                <Authorized>
+                    <a class="nav-link" @onclick="logout" style="cursor: pointer">
+                        <span class="oi oi-account-logout" aria-hidden="true"></span> Logout
+                    </a>
+                </Authorized>
+            </AuthorizeView>
         </div>
 
              <div class="nav-item px-3">
+                 <AuthorizeView>
+                 <NotAuthorized> 
             <NavLink class="nav-link" href="register">
                  <span class="oi oi-people" aria-hidden="true"> </span> Register
             </NavLink>
+
+             </NotAuthorized>
+             </AuthorizeView>
         </div>
 
                      <div class="nav-item px-3">
+               <AuthorizeView>
+              <NotAuthorized>
             <NavLink class="nav-link" href="verify">
                  <span class="oi oi-check" aria-hidden="true"> </span> Verify
             </NavLink>
+             </NotAuthorized>
+               </AuthorizeView>
         </div>
 
     </nav>
@@ -64,4 +85,15 @@
         await CategoryService.GetCategories();
 
     }
+
+
+    private async void logout()
+    {
+
+        await LocalStorage.RemoveItemAsync("email");
+
+        await AuthStateProvider.GetAuthenticationStateAsync();
+
+}
+
 }

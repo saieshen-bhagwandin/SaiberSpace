@@ -1,6 +1,9 @@
 ﻿@page "/login"
 @inject IUserService UserService
 @inject HttpClient Http
+@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthStateProvider
 
 
 <h3>Login</h3><br />
@@ -23,6 +26,11 @@
     private async void HandleLogin()
     {
         await UserService.LoginAsync(user);
+
+        await LocalStorage.SetItemAsync<string>("email", user.Email);
+        await AuthStateProvider.GetAuthenticationStateAsync();
+        NavigationManager.NavigateTo("");
+
 
     }
 }
