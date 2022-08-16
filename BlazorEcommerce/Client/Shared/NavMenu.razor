@@ -1,6 +1,7 @@
 ﻿@inject ICategoryService CategoryService
 @inject ILocalStorageService LocalStorage
 @inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager NavigationManager
 
 <div class="top-row ps-3 navbar navbar-dark" style="background-color:grey">
     <div class="container-fluid">
@@ -94,6 +95,7 @@
 
         await AuthStateProvider.GetAuthenticationStateAsync();
 
+         NavigationManager.NavigateTo("");
 }
 
 }

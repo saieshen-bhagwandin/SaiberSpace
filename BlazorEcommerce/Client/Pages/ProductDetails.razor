@@ -19,13 +19,13 @@
     <div class="media-body">
         <h2 class="mb-0">@product.Title</h2> <br>
         <p>@product.Description</p>
-        @if (product.Editions != null && product.Editions.Count > 1)
+        @if (product.Variants != null && product.Variants.Count > 0)
         {
             <div class="form-group">
                 <select class="form-control" @bind="currentEditionId">
-                    @foreach (var variant in product.Editions)
+                    @foreach (var variant in product.Variants)
                     {
-                        <option value="@variant.Id" selected="selected">@variant.Name</option>
+                        <option value="@variant.Edition.Id" >@variant.Edition.Name</option>
                     }
                 </select>
             </div>
@@ -33,20 +33,27 @@
        <br>
 
 
-            @if (@product.OriginalPrice > product.Price)
+   @if (GetSelectedVariant() != null)
+        {
+            @if (GetSelectedVariant().OriginalPrice > GetSelectedVariant().Price)
             {
-                <h6 class="text-muted original-price">$@product.OriginalPrice</h6>
+                <h6 class="text-muted original-price">$@GetSelectedVariant().OriginalPrice</h6>
             }
             <h4 class="price">
-                $@product.Price
+                $@GetSelectedVariant().Price
             </h4> <br>
-        
-        <EditForm Model="cartItem">
-            <div class="form-group">
+        }
+       
+             <EditForm Model="cartItem">
+               <div class="form-group">
                 <InputNumber id="quantity" @bind-Value="cartItem.Quantity" class="form-control" style="width: 70px;" />
-            </div>
-        </EditForm> <br>
-        <button class="btn btn-primary" ><i class="oi oi-cart"></i>&nbsp;&nbsp;&nbsp;Add to Cart</button>
+                </div>
+              </EditForm> <br>
+               <AuthorizeView>
+                 <Authorized>
+              <button class="btn btn-primary" ><i class="oi oi-cart"></i>&nbsp;&nbsp;&nbsp;Add to Cart</button>
+            </Authorized>
+        </AuthorizeView>
     </div>
 
 </div>
@@ -58,10 +65,10 @@
 
 
 @code {
-    private Product? product = null;
+    private Product product = new Product();
     private string message = string.Empty;
 
-        private int currentEditionId = 1;
+    private int currentEditionId = 1;
 
     private CartItem cartItem = new CartItem { Quantity = 1 };
 
@@ -70,23 +77,24 @@
 
     protected override async Task OnParametersSetAsync() {
 
-        message = "Loading product...";
-
         var result = await ProductService.GetProductByIdAsync(Id);
 
-        if (!result.Success)
-        {
+        if(result.Data!=null)
+        product = result.Data;
 
-            message = result.Message;
+        if (product.Variants.Count > 0) {
 
-        }
-        else
-        {
-
-            product = result.Data;
+            currentEditionId = product.Variants[0].EditionId;
 
         }
 
+    }
+
+
+        private ProductVariant GetSelectedVariant()
+    {
+        var variant = product.Variants.FirstOrDefault(v => v.EditionId == currentEditionId);
+        return variant;
     }
 
 
