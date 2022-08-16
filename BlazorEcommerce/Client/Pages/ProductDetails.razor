@@ -13,23 +13,43 @@
 
 
     <div class="media">
-        <div class="media-img-wrapper mr-2">
-    <img class="media-img" src="@product.ImageUrl" alt="@product.Title">
-    </div>
-   
+    <div class="media-img-big-wrapper mr-2">
+        <img class="media-img" src="@product.ImageUrl" alt="@product.Title" />
+    </div> 
     <div class="media-body">
-        <h2 class="mb-0">@product.Title</h2><br>
-        <p> @product.Description</p>
-        <p><b> Quantity : @product.Quantity </b></p><br>
-        <h4 class="price">
+        <h2 class="mb-0">@product.Title</h2> <br>
+        <p>@product.Description</p>
+        @if (product.Editions != null && product.Editions.Count > 1)
+        {
+            <div class="form-group">
+                <select class="form-control" @bind="currentEditionId">
+                    @foreach (var variant in product.Editions)
+                    {
+                        <option value="@variant.Id" selected="selected">@variant.Name</option>
+                    }
+                </select>
+            </div>
+        }
+       <br>
 
-            R @product.Price
 
-        </h4>
+            @if (@product.OriginalPrice > product.Price)
+            {
+                <h6 class="text-muted original-price">$@product.OriginalPrice</h6>
+            }
+            <h4 class="price">
+                $@product.Price
+            </h4> <br>
+        
+        <EditForm Model="cartItem">
+            <div class="form-group">
+                <InputNumber id="quantity" @bind-Value="cartItem.Quantity" class="form-control" style="width: 70px;" />
+            </div>
+        </EditForm> <br>
+        <button class="btn btn-primary" ><i class="oi oi-cart"></i>&nbsp;&nbsp;&nbsp;Add to Cart</button>
     </div>
 
-
-    </div>
+</div>
 
 
 
@@ -40,6 +60,10 @@
 @code {
     private Product? product = null;
     private string message = string.Empty;
+
+        private int currentEditionId = 1;
+
+    private CartItem cartItem = new CartItem { Quantity = 1 };
 
     [Parameter]
     public int Id {get;set;}
@@ -64,6 +88,11 @@
         }
 
     }
+
+
+
+
+
 
 
 }

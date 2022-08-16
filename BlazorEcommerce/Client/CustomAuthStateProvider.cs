@@ -16,7 +16,7 @@ namespace BlazorEcommerce.Client
             var state = new AuthenticationState(new ClaimsPrincipal());
 
 
-            string email = await _localStorage.GetItemAsStringAsync("email");
+            string email = await _localStorage.GetItemAsStringAsync("userinfo");
 
             if (!string.IsNullOrEmpty(email)) {
 

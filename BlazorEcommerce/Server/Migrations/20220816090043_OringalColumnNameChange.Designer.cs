@@ -4,6 +4,7 @@ using BlazorEcommerce.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorEcommerce.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220816090043_OringalColumnNameChange")]
+    partial class OringalColumnNameChange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -358,17 +360,17 @@ namespace BlazorEcommerce.Server.Migrations
                         },
                         new
                         {
+                            EditionsId = 4,
+                            ProductsId = 7
+                        },
+                        new
+                        {
                             EditionsId = 5,
                             ProductsId = 7
                         },
                         new
                         {
                             EditionsId = 6,
-                            ProductsId = 7
-                        },
-                        new
-                        {
-                            EditionsId = 7,
                             ProductsId = 7
                         });
                 });

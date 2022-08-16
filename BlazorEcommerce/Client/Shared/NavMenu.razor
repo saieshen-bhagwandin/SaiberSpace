@@ -2,7 +2,7 @@
 @inject ILocalStorageService LocalStorage
 @inject AuthenticationStateProvider AuthStateProvider
 
-<div class="top-row ps-3 navbar navbar-dark">
+<div class="top-row ps-3 navbar navbar-dark" style="background-color:grey">
     <div class="container-fluid">
         <a class="navbar-brand" href="">SaiberSpace</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -11,8 +11,8 @@
     </div>
 </div>
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu" style="background-color:black">
+    <nav class="flex-column" style="background-color:black">
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="oi oi-home" aria-hidden="true"></span> Home
@@ -90,7 +90,7 @@
     private async void logout()
     {
 
-        await LocalStorage.RemoveItemAsync("email");
+        await LocalStorage.RemoveItemAsync("userinfo");
 
         await AuthStateProvider.GetAuthenticationStateAsync();
 

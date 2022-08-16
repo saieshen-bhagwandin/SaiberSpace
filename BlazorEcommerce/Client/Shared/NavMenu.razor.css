@@ -4,7 +4,7 @@
 
 .top-row {
     height: 3.5rem;
-    background-color: rgba(0,0,0,0.4);
+    background-color: black;
 }
 
 .navbar-brand {
@@ -21,6 +21,7 @@
 .nav-item {
     font-size: 0.9rem;
     padding-bottom: 0.5rem;
+    background:black;
 }
 
     .nav-item:first-of-type {
@@ -56,6 +57,13 @@
     background-color:white;
     width:220px;
     margin-left:15px;
+
+}
+
+.sidebar {
+
+background-color:black;
+
 
 }
 

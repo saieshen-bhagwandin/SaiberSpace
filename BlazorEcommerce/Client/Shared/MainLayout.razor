@@ -14,7 +14,7 @@
     
                  <AuthorizeView>
                        <Authorized>
-                   <a href="" target="_blank">Hello @Localstorage.GetItemAsString("email")</a>
+                   <a href="" target="_blank">Hello @details.Email </a>
                 </Authorized>
                    </AuthorizeView>
                        </div>
@@ -23,3 +23,20 @@
         </article>
     </main>
 </div>
+
+
+@code{
+    UserRegisterRequest details = new UserRegisterRequest();
+
+    protected override async Task OnInitializedAsync()
+    {
+       setuser();
+    }
+
+    private async void  setuser() {
+
+        var user = Localstorage.GetItem<UserRegisterRequest>("userinfo");
+        details.Email = user.Email;
+    }
+
+}

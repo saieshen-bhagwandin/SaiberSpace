@@ -11,8 +11,8 @@
 
         public async Task<ServiceResponse<Product>> GetProductByIdAsync(int productId)
         {
-            var response = new ServiceResponse<Product>();  
-            var product = await _context.Products.FindAsync(productId);
+            var response = new ServiceResponse<Product>();
+            var product = await _context.Products.Include(p => p.Editions).FirstOrDefaultAsync(p => p.Id == productId);
 
             if (product == null)
             {

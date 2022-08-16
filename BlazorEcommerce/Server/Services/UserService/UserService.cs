@@ -82,8 +82,9 @@ namespace BlazorEcommerce.Server.Services.UserService
 
                 return userinvalid;
 
-            }else
-            return user; 
+            }
+            else
+                return user;
         }
 
         public async Task<string> VerifyAsync(VerifyModel token)
