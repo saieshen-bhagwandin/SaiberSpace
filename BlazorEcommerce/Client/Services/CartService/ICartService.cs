@@ -5,8 +5,13 @@
 
         event Action OnChange;
 
-        Task AddToCart(ProductVariant productVariant);
+        Task AddToCart(CartItem cartItem);
 
         Task<List<CartItem>> GetCartItems();
+
+        Task DeleteItem(CartItem item);
+
+        Task EmptyCart();
+
     }
 }

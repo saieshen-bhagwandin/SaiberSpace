@@ -101,8 +101,16 @@
 
     private async Task AddToCart()
     {
+        var productVariant = GetSelectedVariant();
 
-        await CartService.AddToCart(GetSelectedVariant());
+        cartItem.EditionId = productVariant.EditionId;
+        cartItem.EditionName = productVariant.Edition.Name;
+        cartItem.Image = product.ImageUrl;
+        cartItem.Price = productVariant.Price;
+        cartItem.ProductId = productVariant.ProductId;
+        cartItem.ProductTitle = product.Title;
+
+        await CartService.AddToCart(cartItem);
 
     }
 
