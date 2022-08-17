@@ -4,6 +4,7 @@
 @inject Blazored.LocalStorage.ILocalStorageService LocalStorage
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthStateProvider
+@inject IToastService ToastService
 
 
 <h3>Login</h3><br />
@@ -11,7 +12,7 @@
 <EditForm Model="user" OnSubmit="HandleLogin">
     <div class="form-group">
         <label for="Email">Email</label><br />
-        <InputText id="Email" @bind-Value="user.Email" class="form-control" />
+        <InputText id="Email" @bind-Value="user.Email" class="form-control"/>
     </div><br />
     <div class="form-group">
         <label for="password">Password</label><br />
@@ -28,13 +29,11 @@
         await UserService.LoginAsync(user);
 
         user.Password = "";
-       
-
-
+    
         await LocalStorage.SetItemAsync("userinfo", user);
         await AuthStateProvider.GetAuthenticationStateAsync();
         NavigationManager.NavigateTo("");
 
-
+       ToastService.ShowSuccess("Welcome User", "Successful Login");
     }
 }

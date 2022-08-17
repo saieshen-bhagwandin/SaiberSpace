@@ -1,6 +1,7 @@
 ﻿@page "/verify"
 @inject IUserService UserService
 @inject HttpClient Http
+@inject IToastService ToastService
 
 <h3>Login</h3><br />
 
@@ -19,6 +20,8 @@
     private async void Verification()
     {
         await UserService.VerifyAsync(verify);
+
+           ToastService.ShowSuccess("User Verified", "Successful Verfication");
 
     }
 }

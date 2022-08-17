@@ -1,6 +1,7 @@
 ﻿@page "/register"
 @inject IUserService UserService
 @inject HttpClient Http
+@inject IToastService ToastService
 
 <h3>Register</h3><br />
 
@@ -27,6 +28,8 @@
     {
         if (user.ConfirmPassword == user.Password) 
            await UserService.AddUserAsync(user);
+
+           ToastService.ShowSuccess("Welcome New User", "Successful Register");
 
     }
 }

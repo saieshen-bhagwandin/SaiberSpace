@@ -8,22 +8,23 @@
         <NavMenu />
     </div>
 
-    <main>
+    <div class="main">
         <div class="top-row px-4">
-        
-    
-                 <AuthorizeView>
+                           <AuthorizeView>
                        <Authorized>
-                   <a href="" target="_blank">Hello @details.Email </a>
+                           
+                   <a href="" target="_blank">Hello, @details.Email </a>
+                   <TopMenu></TopMenu>
                 </Authorized>
                    </AuthorizeView>
-                       </div>
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+        </div>
 
+        <div class="content px-4">
+            @Body
+        </div>
+    </div>
+</div>
+<BlazoredToasts />
 
 @code{
     UserRegisterRequest details = new UserRegisterRequest();
@@ -33,9 +34,10 @@
        setuser();
     }
 
-    private async void  setuser() {
+    private void setuser() {
 
         var user = Localstorage.GetItem<UserRegisterRequest>("userinfo");
+  
         details.Email = user.Email;
     }
 
