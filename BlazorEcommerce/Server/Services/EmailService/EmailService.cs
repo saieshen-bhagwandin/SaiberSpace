@@ -18,6 +18,8 @@ namespace BlazorEcommerce.Server.Services.EmailService
             _context = context;
         }
 
+       
+
         public void purchasedorder(EmailDTO useremail)
         {
 

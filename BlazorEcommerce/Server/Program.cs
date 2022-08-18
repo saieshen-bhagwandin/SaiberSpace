@@ -4,6 +4,7 @@ global using BlazorEcommerce.Server.Data;
 global using BlazorEcommerce.Server.Services.ProductService;
 global using BlazorEcommerce.Server.Services.CategoryService;
 global using BlazorEcommerce.Server.Services.UserService;
+global using BlazorEcommerce.Server.Services.OrderService;
 global using BlazorEcommerce.Server.Services.EmailService;
 using Microsoft.AspNetCore.ResponseCompression;
 
@@ -27,6 +28,7 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 var app = builder.Build();
 

@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Json;
+﻿using Newtonsoft.Json;
+using System.Net.Http.Json;
 
 namespace BlazorEcommerce.Client.Services.UserService
 {
@@ -12,19 +13,23 @@ namespace BlazorEcommerce.Client.Services.UserService
         }
 
 
-        public async Task AddUserAsync(UserRegisterRequest request)
+        public async Task<string> AddUserAsync(UserRegisterRequest request)
         {
             var result = await _httpClient.PostAsJsonAsync("api/user/register", request);
 
-           
+            var resultString = await result.Content.ReadAsStringAsync();
+
+            return resultString;
 
         }
 
-        public async Task LoginAsync(UserLoginRequest request)
+        public async Task<User> LoginAsync(UserLoginRequest request)
         {
             var result = await _httpClient.PostAsJsonAsync("api/user/login", request);
 
+            var resultString = await result.Content.ReadFromJsonAsync<User>();    
 
+            return resultString;
 
         }
 

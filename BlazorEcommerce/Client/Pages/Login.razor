@@ -9,31 +9,51 @@
 
 <h3>Login</h3><br />
 
-<EditForm Model="user" OnSubmit="HandleLogin">
+<EditForm Model="answer" OnSubmit="HandleLogin">
     <div class="form-group">
         <label for="Email">Email</label><br />
-        <InputText id="Email" @bind-Value="user.Email" class="form-control"/>
+        <InputText id="Email" @bind-Value="answer.Email" type = "email" required class="form-control"/>
     </div><br />
     <div class="form-group">
         <label for="password">Password</label><br />
-        <InputText id="password" @bind-Value="user.Password" type="password" class="form-control" />
+        <InputText id="password" @bind-Value="answer.Password" type="password" required class="form-control" />
     </div><br />
     <button type="submit" class="btn btn-primary">Login</button>
 </EditForm>
 
 @code {
-    private UserLoginRequest user = new UserLoginRequest();
+    private UserLoginRequest answer = new UserLoginRequest();
 
     private async void HandleLogin()
     {
-        await UserService.LoginAsync(user);
+        var user = await UserService.LoginAsync(answer);
 
-        user.Password = "testing";
+
+        if (user.Email == "User not found") {
+            ToastService.ShowError(user.Email, "Login failed");
+
+
+    } else if (user.Email == "Password is incorrect") { 
     
-        await LocalStorage.SetItemAsync("userinfo", user);
+    
+      ToastService.ShowError(user.Email, "Login failed");
+    
+    
+    }else if (user.Email == "User not verified") { 
+    
+    
+      ToastService.ShowError(user.Email, "Login failed");
+    
+    
+    }else{
+
+        await LocalStorage.SetItemAsync("userinfo", answer);
         await AuthStateProvider.GetAuthenticationStateAsync();
         NavigationManager.NavigateTo("");
 
        ToastService.ShowSuccess("Welcome User", "Successful Login");
+
+    }
+
     }
 }

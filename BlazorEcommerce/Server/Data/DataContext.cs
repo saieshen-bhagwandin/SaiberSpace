@@ -269,6 +269,8 @@
 
         public DbSet<User> Users { get; set; }
 
-        public DbSet<Edition> Editions { get; set; }    
+        public DbSet<Edition> Editions { get; set; }
+
+        public DbSet<Orders> Orders { get; set; }
     }
 }

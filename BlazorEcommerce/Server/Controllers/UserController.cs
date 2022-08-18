@@ -16,29 +16,29 @@ namespace BlazorEcommerce.Server.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(UserRegisterRequest request) {
+        public async Task<string> Register(UserRegisterRequest request) {
 
             var result = await _userService.AddUserAsync(request);
 
-            return Ok(result);
+            return result;
 
 
         }
 
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(UserLoginRequest request)
+        public async Task<User> Login(UserLoginRequest request)
         {
 
             var result = await _userService.LoginAsync(request);
 
             if (result.Id == 0) {
 
-                return BadRequest(result.Email);
+                return result;
 
             }
 
-            return Ok(result);
+            return result;
 
         }
 

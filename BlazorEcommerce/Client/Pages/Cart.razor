@@ -1,5 +1,6 @@
 ﻿@page "/cart"
 @inject ICartService CartService
+@inject IOrderService orderService
 @inject ISyncLocalStorageService Localstorage
 
 @if (!orderPlaced)
@@ -85,7 +86,6 @@ else
     {
         orderPlaced = true;
 
-
         var user = Localstorage.GetItem<UserRegisterRequest>("userinfo");
 
         EmailDTO emaildto = new EmailDTO();
@@ -99,6 +99,8 @@ else
         await CartService.purchaseAsync(emaildto);
 
         await CartService.EmptyCart();
+
+       orderService.AddOrderAsync(emaildto);
     }
 
 }
