@@ -29,9 +29,11 @@
 @code{
     UserRegisterRequest details = new UserRegisterRequest();
 
-    protected override async Task OnInitializedAsync()
+ 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-       setuser();
+         if (Localstorage.GetItem<UserRegisterRequest>("userinfo") != null)
+         setuser();
     }
 
     private void setuser() {

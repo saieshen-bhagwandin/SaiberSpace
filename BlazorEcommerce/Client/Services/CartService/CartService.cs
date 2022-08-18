@@ -1,4 +1,5 @@
 ﻿using Blazored.Toast.Services;
+using System.Net.Http.Json;
 
 namespace BlazorEcommerce.Client.Services.CartService
 {
@@ -7,12 +8,14 @@ namespace BlazorEcommerce.Client.Services.CartService
         private readonly ILocalStorageService _localStorage;
         private readonly IToastService _toastService;
         private readonly IProductService _productService;
+        private readonly HttpClient _http;
 
-        public CartService(ILocalStorageService localStorage,IToastService toastService,IProductService productService)
+        public CartService(ILocalStorageService localStorage,IToastService toastService,IProductService productService,HttpClient http)
         {
             _localStorage = localStorage;
             _toastService = toastService;
             _productService = productService;
+            _http = http;
         }
 
 
@@ -98,6 +101,12 @@ namespace BlazorEcommerce.Client.Services.CartService
             await _localStorage.RemoveItemAsync("cart");
             OnChange.Invoke();
 
+        }
+
+        public async Task purchaseAsync(EmailDTO emaildto)
+        {
+    
+            var result = await _http.PostAsJsonAsync("api/email/purchaseemail", emaildto);
         }
     }
 }

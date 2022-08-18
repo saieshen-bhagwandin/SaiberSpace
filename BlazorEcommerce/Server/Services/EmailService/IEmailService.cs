@@ -5,5 +5,7 @@
 
         void SendEmail(User user);
 
+        void purchasedorder(EmailDTO email);
+
     }
 }

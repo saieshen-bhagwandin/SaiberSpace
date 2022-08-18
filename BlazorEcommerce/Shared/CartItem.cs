@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace BlazorEcommerce.Shared
 {
     public class CartItem
     {
+      
         public int ProductId { get; set; }
         public int EditionId { get; set; }
         public string ProductTitle { get; set; } = String.Empty;

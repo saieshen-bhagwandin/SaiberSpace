@@ -28,7 +28,7 @@
     {
         await UserService.LoginAsync(user);
 
-        user.Password = "";
+        user.Password = "testing";
     
         await LocalStorage.SetItemAsync("userinfo", user);
         await AuthStateProvider.GetAuthenticationStateAsync();

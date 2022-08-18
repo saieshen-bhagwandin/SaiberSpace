@@ -1,5 +1,6 @@
 ﻿@page "/cart"
 @inject ICartService CartService
+@inject ISyncLocalStorageService Localstorage
 
 @if (!orderPlaced)
 {
@@ -52,11 +53,11 @@ else
                     <h5><a href="/product/@item.ProductId">@item.ProductTitle</a></h5>
                     <span>@item.EditionName</span><br />
                 </div>
-                <div class="item-price">$@(item.Price * item.Quantity)</div>
+                <div class="item-price">R @(item.Price * item.Quantity)</div>
             </div>
         }
         <div class="item-price">
-            Total (@cartItems.Count): $@cartItems.Sum(item => item.Price * item.Quantity)
+            Total (@cartItems.Count): R @cartItems.Sum(item => item.Price * item.Quantity)
         </div>
     </div>
 }
@@ -66,7 +67,7 @@ else
 
 @code {
     List<CartItem> cartItems = new List<CartItem>();
-      bool orderPlaced = false;
+    bool orderPlaced = false;
 
 
     protected override async Task OnInitializedAsync()
@@ -74,15 +75,29 @@ else
         cartItems = await CartService.GetCartItems();
     }
 
-       private async Task DeleteItem(CartItem item)
+    private async Task DeleteItem(CartItem item)
     {
         await CartService.DeleteItem(item);
         cartItems = await CartService.GetCartItems();
     }
 
-        private async Task PlaceOrder()
+    private async Task PlaceOrder()
     {
         orderPlaced = true;
+
+
+        var user = Localstorage.GetItem<UserRegisterRequest>("userinfo");
+
+        EmailDTO emaildto = new EmailDTO();
+
+        user.ConfirmPassword = "testing";
+
+        emaildto.user = user;
+
+        emaildto.cartItem = cartItems;
+
+        await CartService.purchaseAsync(emaildto);
+
         await CartService.EmptyCart();
     }
 

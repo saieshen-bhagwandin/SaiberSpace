@@ -13,5 +13,6 @@
 
         Task EmptyCart();
 
+        Task purchaseAsync(EmailDTO emaildto);
     }
 }

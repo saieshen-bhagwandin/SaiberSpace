@@ -18,11 +18,11 @@ namespace BlazorEcommerce.Server.Controllers
             _emailService = emailService;
         }
 
-        [HttpPost("sendemail")]
-        public IActionResult SendEmail(User user) {
+        [HttpPost("purchaseemail")]
+        public IActionResult SendEmail(EmailDTO email) {
 
 
-            _emailService.SendEmail(user);
+            _emailService.purchasedorder(email);
 
        
             return Ok();

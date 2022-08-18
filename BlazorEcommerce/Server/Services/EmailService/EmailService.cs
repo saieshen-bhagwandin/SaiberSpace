@@ -18,6 +18,27 @@ namespace BlazorEcommerce.Server.Services.EmailService
             _context = context;
         }
 
+        public void purchasedorder(EmailDTO useremail)
+        {
+
+            var email = new MimeMessage();
+            email.From.Add(MailboxAddress.Parse(_configuration.GetSection("EmailUserName").Value));
+            email.To.Add(MailboxAddress.Parse(useremail.user.Email));
+            email.Subject = "Your SaiberSpace order confirmed ";
+            email.Body = new TextPart(TextFormat.Html)
+            {
+                Text = "<h3>Thank you for your order!</h3 ><h4> Here's what you'll get : </h4>" + theitems(useremail) };
+
+            using var smtp = new SmtpClient();
+            smtp.Connect(_configuration.GetSection("EmailHost").Value, 25, SecureSocketOptions.StartTls);
+            smtp.Authenticate(_configuration.GetSection("EmailUserName").Value, _configuration.GetSection("EmailPassword").Value);
+            smtp.Send(email);
+            smtp.Disconnect(true);
+
+
+
+        }
+
         public  void SendEmail(User user)
         {
 
@@ -33,5 +54,33 @@ namespace BlazorEcommerce.Server.Services.EmailService
             smtp.Send(email);
             smtp.Disconnect(true);
         }
+
+
+
+        public string theitems(EmailDTO email) {
+
+
+            string thing = "";
+
+            thing = thing + "<ul>";
+                
+                foreach (var item in email.cartItem)
+            {
+
+                thing = thing + "<li> " +  item.ProductTitle + "-" + item.EditionName + "(" + "x" + item.Quantity + ")                          R" + item.Price * item.Quantity + " </li>";
+           
+           
+           
+           };
+
+
+            thing = thing + "</ul>";
+
+
+            return thing;
+
+
+        }
+
     }
 }
