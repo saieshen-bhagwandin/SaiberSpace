@@ -19,6 +19,7 @@
     <div class="media-body">
         <h2 class="mb-0">@product.Title</h2> <br>
         <p>@product.Description</p>
+        
         @if (product.Variants != null && product.Variants.Count > 0)
         {
             <div class="form-group">
@@ -37,13 +38,13 @@
         {
             @if (GetSelectedVariant().OriginalPrice > GetSelectedVariant().Price)
             {
-                <h6 class="text-muted original-price">$@GetSelectedVariant().OriginalPrice</h6>
+                <h6 class="text-muted original-price">R @GetSelectedVariant().OriginalPrice</h6>
             }
             <h4 class="price">
-                $@GetSelectedVariant().Price
+                R @GetSelectedVariant().Price
             </h4> <br>
         }
-       
+          
              <EditForm Model="cartItem">
                <div class="form-group">
                 <InputNumber id="quantity" @bind-Value="cartItem.Quantity" class="form-control" style="width: 70px;" />

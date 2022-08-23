@@ -2,6 +2,7 @@
 @inject ICartService CartService
 @inject IOrderService orderService
 @inject ISyncLocalStorageService Localstorage
+@inject IToastService ToastService
 
 @if (!orderPlaced)
 {
@@ -90,17 +91,30 @@ else
 
         EmailDTO emaildto = new EmailDTO();
 
+        user.Password = "testing";
         user.ConfirmPassword = "testing";
 
         emaildto.user = user;
 
         emaildto.cartItem = cartItems;
 
-        await CartService.purchaseAsync(emaildto);
+        var result = await orderService.AddOrderAsync(emaildto);
 
-        await CartService.EmptyCart();
+        if (result == "order was placed")
+        {
 
-       orderService.AddOrderAsync(emaildto);
+            await CartService.purchaseAsync(emaildto);
+
+            await CartService.EmptyCart();
+
+             ToastService.ShowSuccess("Email has been sent to confirm order", "Purchase Success");
+
+        }else{
+        
+        ToastService.ShowError(result, "Purchase failed");
+        
+        }
+
     }
 
 }

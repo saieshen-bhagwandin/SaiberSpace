@@ -3,12 +3,12 @@
 @inject HttpClient Http
 @inject IToastService ToastService
 
-<h3>Login</h3><br />
+<h3>Verify Account</h3><br />
 
 <EditForm Model="verify" OnSubmit="Verification">
     <div class="form-group">
         <label for="Token">Token</label><br />
-        <InputText id="Token" @bind-Value="verify.Token" class="form-control" />
+        <InputText id="Token" @bind-Value="verify.Token" required class="form-control" />
     </div><br />
 
     <button type="submit" class="btn btn-primary">Verify Account</button>
@@ -19,9 +19,21 @@
 
     private async void Verification()
     {
-        await UserService.VerifyAsync(verify);
+        var result = await UserService.VerifyAsync(verify);
 
-           ToastService.ShowSuccess("User Verified", "Successful Verfication");
+        if (result == "User Verified")
+        {
+
+            ToastService.ShowSuccess("User Verified", "Successful Verfication");
+        }
+        else { 
+        
+        ToastService.ShowError(result, "Verification failed");
+        
+        
+        }
+
+
 
     }
 }

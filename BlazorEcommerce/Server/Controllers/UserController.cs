@@ -44,12 +44,12 @@ namespace BlazorEcommerce.Server.Controllers
 
 
         [HttpPost("verify")]
-        public async Task<IActionResult> Verify(VerifyModel token)
+        public async Task<string> Verify(VerifyModel token)
         {
 
             var result = await _userService.VerifyAsync(token);
 
-            return Ok(result);
+            return result;
         }
 
 

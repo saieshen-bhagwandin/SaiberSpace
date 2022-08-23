@@ -3,6 +3,11 @@
     public interface IOrderService
     {
 
-        void AddOrderAsync(EmailDTO email);
+        event Action OrdersChanged;
+        List<Orders> Orders { get; set; }
+
+        Task<string> AddOrderAsync(EmailDTO email);
+
+        Task GetOrder(string email);
     }
 }

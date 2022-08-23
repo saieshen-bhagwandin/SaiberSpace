@@ -45,6 +45,10 @@
                     <a class="nav-link" @onclick="logout" style="cursor: pointer">
                         <span class="oi oi-account-logout" aria-hidden="true"></span> Logout
                     </a>
+
+            <NavLink class="nav-link" href="orderhistory" >
+            <span class="oi oi-calendar" aria-hidden="true"></span> Orders
+            </NavLink>
                 </Authorized>
             </AuthorizeView>
         </div>
@@ -86,6 +90,8 @@
     protected override async Task OnInitializedAsync()
     {
         await CategoryService.GetCategories();
+
+       
 
     }
 

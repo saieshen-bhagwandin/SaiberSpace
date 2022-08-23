@@ -40,10 +40,6 @@ namespace BlazorEcommerce.Server.Services.UserService
 
             await _context.SaveChangesAsync();
 
-
-            
-
-
             return "User successfully created";
 
         }
@@ -97,12 +93,22 @@ namespace BlazorEcommerce.Server.Services.UserService
                 return "Invalid token";
 
             }
+            else if (user.VerifiedAt != null)
+            {
 
 
-            user.VerifiedAt = DateTime.Now;
-            await _context.SaveChangesAsync();
+                return "Account already verified";
 
-            return "User Verified";
+            }
+            else
+            {
+
+                user.VerifiedAt = DateTime.Now;
+                await _context.SaveChangesAsync();
+
+                return "User Verified";
+
+            }
         }
 
 

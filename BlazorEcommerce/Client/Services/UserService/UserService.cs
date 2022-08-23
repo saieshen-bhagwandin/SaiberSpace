@@ -33,25 +33,13 @@ namespace BlazorEcommerce.Client.Services.UserService
 
         }
 
-        public async Task VerifyAsync(VerifyModel token)
+        public async Task<string> VerifyAsync(VerifyModel token)
         {
 
+         var result = await _httpClient.PostAsJsonAsync("api/user/verify", token);
+         var resultString = await result.Content.ReadAsStringAsync();
 
-        
-
-            try
-            {
-            
-                    var result = await _httpClient.PostAsJsonAsync("api/user/verify", token);
-               
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);  
-                throw;
-            }
-           
-
+         return resultString;
 
         }
     }

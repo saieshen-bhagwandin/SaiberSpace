@@ -1,0 +1,125 @@
+﻿@page "/orderhistory"
+@inject ISyncLocalStorageService Localstorage
+@inject IOrderService orderService
+@inject ISyncLocalStorageService Localstorage
+@inject IProductService productService
+
+
+<h3>Orders</h3><br />
+
+@if (orderService.Orders == null || orderService.Orders.Count == 0)
+{
+    
+    <span> You have no orders...</span>
+
+}else{
+
+<ul class="list-unstyled" >
+      <table>
+
+  <tr>
+ <th>Order Number</th>
+<th>Product</th>
+<th>Not Working</th>
+<th>Date</th>
+ </tr>
+
+   @foreach (var order in orderService.Orders)
+{
+
+
+      <tr>
+           <td>@order.OrderNumber</td>
+           <td>@refactor(order.ProductIds,order.Quantity)</td>
+           <td>@productname(order.ProductIds)</td>
+           <td>@order.Date</td>
+       </tr>
+
+        
+ }
+
+    </table>
+
+</ul>
+
+}
+
+@code {
+
+    public List<Orders> Orders { get; set; } = new List<Orders>();
+    string productitles = "";
+
+
+    protected override void OnInitialized()
+    {
+        orderService.OrdersChanged += StateHasChanged;
+    }
+
+
+    public void Dispose() { 
+
+        orderService.OrdersChanged -= StateHasChanged;
+
+    }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        var user = Localstorage.GetItem<UserRegisterRequest>("userinfo");
+
+        if(user!=null)
+            await orderService.GetOrder(user.Email);
+
+    }
+
+    public async Task<string> productname(string id){
+
+        string[] words = id.Split(',');
+        string titles = "";
+
+        for (var i = 1; i < 2; i++)
+        {
+            Product product = new Product();
+            int theid = Int32.Parse(words[i]);
+
+            var result = await productService.GetProductByIdAsync(theid);
+
+            if (result.Data != null)
+                product = result.Data;
+
+            titles = titles + "," + product.Title;
+
+        }
+
+        return titles;
+
+
+    }
+
+    public string refactor(string id,string quantity){
+
+        string[] words = id.Split(',');
+        string titles = "";
+
+        string[] q = quantity.Split(',');
+
+        for (var i = 1; i < words.Length; i++)
+        {
+            Product product = new Product();
+            int theid = Int32.Parse(words[i]);
+
+
+            titles = titles + words[i] + "(" + q[i] + ")    ,                           ";
+
+        }
+
+    
+
+        return titles;
+
+    
+    }
+
+
+
+}

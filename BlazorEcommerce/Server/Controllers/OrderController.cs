@@ -16,13 +16,27 @@ namespace BlazorEcommerce.Server.Controllers
 
 
         [HttpPost("add")]
-        public IActionResult AddToOrder(EmailDTO email)
+        public async Task<string> AddToOrder(EmailDTO email)
         {
-            _orderService.AddOrderAsync(email);
+           var result = await _orderService.AddOrderAsync(email);
 
-            return Ok();
+            return result;
 
         }
+
+
+        [HttpGet("getorders/{email}")]
+
+        public async Task<ActionResult<ServiceResponse<List<Orders>>>> GetOrders(string email)
+        {
+
+            var result = await _orderService.GetOrders(email);
+
+            return Ok(result);
+
+        }
+
+
 
 
     }

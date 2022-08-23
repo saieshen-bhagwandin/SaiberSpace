@@ -1,6 +1,11 @@
 ﻿.a:hover {
-    color:red;
+
     text-decoration:none;
 
+}
+
+
+.test:hover {
+    text-decoration: none;
 }
 

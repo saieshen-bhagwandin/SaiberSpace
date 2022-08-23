@@ -9,9 +9,11 @@ namespace BlazorEcommerce.Shared
     public class Orders
     {
         public int Id { get; set; }
+
+        public string  OrderNumber { get; set; }
         public string Email { get; set; } = string.Empty;
         public string ProductIds { get; set; } = string.Empty;
-
+        public string EidtionIds { get; set; } = string.Empty;
         public string Quantity { get; set; } = string.Empty;
         public DateTime Date { get; set; }
 
