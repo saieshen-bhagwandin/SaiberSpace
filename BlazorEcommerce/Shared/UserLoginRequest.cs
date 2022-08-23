@@ -15,5 +15,7 @@ namespace BlazorEcommerce.Shared
         [Required]
         public string Password { get; set; } = string.Empty;
 
+        public string Token { get; set; } = string.Empty;
+
     }
 }

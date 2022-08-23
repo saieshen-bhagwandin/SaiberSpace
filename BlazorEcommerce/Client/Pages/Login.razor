@@ -33,19 +33,21 @@
             ToastService.ShowError(user.Email, "Login failed");
 
 
-    } else if (user.Email == "Password is incorrect") { 
-    
-    
-      ToastService.ShowError(user.Email, "Login failed");
-    
-    
-    }else if (user.Email == "User not verified") { 
-    
-    
-      ToastService.ShowError(user.Email, "Login failed");
-    
-    
-    }else{
+        } else if (user.Email == "Password is incorrect") { 
+
+
+            ToastService.ShowError(user.Email, "Login failed");
+
+
+        }else if (user.Email == "User not verified") { 
+
+
+            ToastService.ShowError(user.Email, "Login failed");
+
+
+        }else{
+
+            answer.Token = user.LoginToken;
 
         await LocalStorage.SetItemAsync("userinfo", answer);
         await AuthStateProvider.GetAuthenticationStateAsync();

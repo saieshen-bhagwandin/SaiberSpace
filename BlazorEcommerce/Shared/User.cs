@@ -23,6 +23,8 @@ namespace BlazorEcommerce.Shared
 
         public DateTime? ResetTokenExpires { get; set; }
 
+        public string LoginToken { get; set; }  = string.Empty;
+
 
     }
 }

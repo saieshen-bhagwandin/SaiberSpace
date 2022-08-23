@@ -1,4 +1,7 @@
-﻿using System.Security.Cryptography;
+﻿using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Security.Cryptography;
 
 namespace BlazorEcommerce.Server.Services.UserService
 {
@@ -6,11 +9,13 @@ namespace BlazorEcommerce.Server.Services.UserService
     {
         private readonly DataContext _context;
         private readonly IEmailService _emailService;
+        public IConfiguration _configuration;
 
-        public UserService(DataContext context, IEmailService emailService)
+        public UserService(DataContext context, IEmailService emailService, IConfiguration configuration)
         {
             _context = context;
             _emailService = emailService;
+            _configuration = configuration;
         }
         public async Task<string> AddUserAsync(UserRegisterRequest request)
         {
@@ -80,8 +85,44 @@ namespace BlazorEcommerce.Server.Services.UserService
 
             }
             else
+
+                user.LoginToken = CreateToken(user);
+
                 return user;
         }
+
+        private string CreateToken(User user)
+        {
+
+            List<Claim> claims = new List<Claim>
+            {
+
+                new Claim(ClaimTypes.Email, user.Email)
+         
+
+
+            };
+
+
+            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value));
+
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+
+            var token = new JwtSecurityToken(
+                claims: claims,
+                expires: DateTime.Now.AddDays(1),
+                signingCredentials: creds
+
+                );
+
+
+            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+
+            return jwt;
+
+        }
+
+
 
         public async Task<string> VerifyAsync(VerifyModel token)
         {
