@@ -5,7 +5,7 @@
 
         void SendEmail(User user);
 
-        void purchasedorder(EmailDTO email);
+         void purchasedorder(EmailDTO email);
 
         
 

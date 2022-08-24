@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlazorEcommerce.Server.Controllers
@@ -9,13 +10,16 @@ namespace BlazorEcommerce.Server.Controllers
     {
         private readonly IOrderService _orderService;
 
+
         public OrderController(IOrderService orderService)
         {
             _orderService = orderService;
+
         }
 
 
         [HttpPost("add")]
+     
         public async Task<string> AddToOrder(EmailDTO email)
         {
            var result = await _orderService.AddOrderAsync(email);
@@ -26,7 +30,7 @@ namespace BlazorEcommerce.Server.Controllers
 
 
         [HttpGet("getorders/{email}")]
-
+    
         public async Task<ActionResult<ServiceResponse<List<Orders>>>> GetOrders(string email)
         {
 

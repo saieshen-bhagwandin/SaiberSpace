@@ -48,6 +48,7 @@
         }else{
 
             answer.Token = user.LoginToken;
+            answer.Password = "*********";
 
         await LocalStorage.SetItemAsync("userinfo", answer);
         await AuthStateProvider.GetAuthenticationStateAsync();

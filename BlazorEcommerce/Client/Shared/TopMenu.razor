@@ -1,17 +1,43 @@
 ﻿@inject ISyncLocalStorageService LocalStorage
 @inject ICartService CartService
 @implements IDisposable
+@inject IProductService productService
+@inject NavigationManager NavigationManager
 
+<BlazoredTypeahead SearchMethod = "@SearchProduct" TValue="Product" TItem="Product" Value="selectedProduct" ValueChanged="HandleSearch" ValueExpression="@(() => selectedProduct)" placeholder="Search product...">
+
+                <SelectedTemplate>
+
+                    @context.Title
+
+                </SelectedTemplate>
+                <ResultTemplate>
+
+                    @context.Title
+
+                </ResultTemplate>
+
+                <NotFoundTemplate>
+
+                    sorry, there weren't any products found
+
+                </NotFoundTemplate>
+            </BlazoredTypeahead>
 
 <a href="cart" class="btn btn-info test">
     <div style="color:white"><i class="oi oi-cart text-white"></i>
    <b> Cart :</b> 
     <span class="badge badge-pill badge-light text-black " style="background-color:white;border-radius:25px">@GetProductCount()</span>
     </div>
-</a>
+</a> <br /><br /><br />
 
+            
 
 @code {
+
+       private Product selectedProduct;
+
+
     protected override void OnInitialized()
     {
         CartService.OnChange += StateHasChanged;   
@@ -27,5 +53,23 @@
         var cart = LocalStorage.GetItem<List<ProductVariant>>("cart");
         return cart != null ? cart.Count : 0;
     }
+
+     private void HandleSearch(Product product) { 
+
+        if(product==null)return;
+
+        selectedProduct = product;
+        NavigationManager.NavigateTo($"product/{selectedProduct.Id}");
+
+    }
+
+    private async Task<IEnumerable<Product>> SearchProduct(string searchtext) {
+
+
+        var response = await productService.SearchProduct(searchtext);
+
+        return response;
+    }
+
 
 }

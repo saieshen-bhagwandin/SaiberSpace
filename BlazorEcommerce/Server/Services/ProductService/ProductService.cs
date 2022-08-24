@@ -57,5 +57,10 @@
 
             return response;
         }
+
+        public async Task<List<Product>> SearchProduct(string searchtext)
+        {
+            return await _context.Products.Where(p => p.Title.Contains(searchtext) || p.Description.Contains(searchtext)).ToListAsync(); 
+        }
     }
 }

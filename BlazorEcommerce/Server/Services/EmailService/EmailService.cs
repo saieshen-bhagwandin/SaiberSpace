@@ -11,25 +11,28 @@ namespace BlazorEcommerce.Server.Services.EmailService
     {
         private readonly IConfiguration _configuration;
         private readonly DataContext _context;
+        private readonly IOrderService _orderService;
 
-        public EmailService(IConfiguration configuration, DataContext context)
+        public EmailService(IConfiguration configuration, DataContext context,IOrderService orderService)
         {
            _configuration = configuration;
             _context = context;
+            _orderService = orderService;
         }
 
        
 
         public void purchasedorder(EmailDTO useremail)
         {
-
+       
+   
             var email = new MimeMessage();
             email.From.Add(MailboxAddress.Parse(_configuration.GetSection("EmailUserName").Value));
             email.To.Add(MailboxAddress.Parse(useremail.user.Email));
             email.Subject = "Your SaiberSpace order confirmed ";
             email.Body = new TextPart(TextFormat.Html)
             {
-                Text = "<h3>Thank you for your order!</h3 ><h4> Here's what you'll get : </h4>" + theitems(useremail) };
+                Text = "<h3>Thank you for your order!</h3 ><h4> Here's what you'll get : </h4><br>" + theitems(useremail)};
 
             using var smtp = new SmtpClient();
             smtp.Connect(_configuration.GetSection("EmailHost").Value, 25, SecureSocketOptions.StartTls);
@@ -61,26 +64,23 @@ namespace BlazorEcommerce.Server.Services.EmailService
 
         public string theitems(EmailDTO email) {
 
+            string textBody = " <table border=" + 1 + " cellpadding=" + 1 + " cellspacing=" + 0 + " width = " + 400 + "><tr bgcolor='white'><th>Product</th> <th>Edition</th><th>Quantity</th><th>Price</th></tr>";
 
-            string thing = "";
-
-            thing = thing + "<ul>";
-                
-                foreach (var item in email.cartItem)
+           
+            
+            foreach (var item in email.cartItem)
             {
 
-                thing = thing + "<li> " +  item.ProductTitle + "-" + item.EditionName + "(" + "x" + item.Quantity + ")                          R" + item.Price * item.Quantity + " </li>";
-           
-           
-           
-           };
+                textBody += "<tr><td>" + item.ProductTitle + "</td><td> " + item.EditionName + "</td><td>" + item.Quantity + "</td><td>" + "R" + item.Price * item.Quantity + "</td></tr>";
+            };
 
 
-            thing = thing + "</ul>";
+            textBody += "<tr><th> Total ( " + email.cartItem.Count + ")</th><td></td><td></td><th>" + "R" + email.cartItem.Sum(item => item.Price * item.Quantity) + "</th></tr>";
+
+            textBody += "</table>";
 
 
-            return thing;
-
+            return textBody;
 
         }
 

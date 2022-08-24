@@ -31,6 +31,9 @@
             ProductsChanged.Invoke();
         }
 
-   
+        public async Task<List<Product>> SearchProduct(string searchtext)
+        {
+           return await _http.GetFromJsonAsync<List<Product>>($"api/Product/Search/{searchtext}"); 
+        }
     }
 }

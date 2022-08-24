@@ -10,5 +10,7 @@
 
         Task<ServiceResponse<Product>> GetProductByIdAsync(int productId);
 
+        Task<List<Product>> SearchProduct(string searchtext);
+
     }
 }

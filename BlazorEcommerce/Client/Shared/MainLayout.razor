@@ -3,6 +3,7 @@
 @inject ISyncLocalStorageService Localstorage
 @inject AuthenticationStateProvider AuthStateProvider
 
+
 <div class="page">
     <div class="sidebar">
         <NavMenu />
@@ -10,10 +11,11 @@
 
     <div class="main">
         <div class="top-row px-4">
+
                            <AuthorizeView>
                        <Authorized>
                            
-                   <a href="" target="_blank">Hello, @details.Email </a>
+                  
                    <TopMenu></TopMenu>
                 </Authorized>
                    </AuthorizeView>
@@ -32,15 +34,17 @@
  
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-         if (Localstorage.GetItem<UserRegisterRequest>("userinfo") != null)
-         setuser();
+        if (Localstorage.GetItem<UserRegisterRequest>("userinfo") != null)
+            setuser();
     }
 
     private void setuser() {
 
         var user = Localstorage.GetItem<UserRegisterRequest>("userinfo");
-  
+
         details.Email = user.Email;
     }
+
+   
 
 }
