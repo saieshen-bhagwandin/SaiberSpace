@@ -1,0 +1,53 @@
+﻿@page "/account"
+@inject IProductService ProductService 
+@inject ISyncLocalStorageService Localstorage
+@inject IToastService ToastService
+@inject ICartService CartService
+@inject IOrderService orderService
+
+@if (user == null)
+{
+    <span>Could not get details...</span>
+
+}else{
+
+
+
+    <div class="media">
+    <div class="media-img-big-wrapper mr-2">
+        <img class="media-img" src="https://img.freepik.com/free-vector/mysterious-mafia-man-smoking-cigarette_52683-34828.jpg?w=826&t=st=1661334988~exp=1661335588~hmac=b4b8bb35aa1b4e2fd98beb8777213dfd975e27d130c5ad265e5dd9f4e49f6b26" alt="@user.Email" />
+    </div> 
+    <div class="media-body">
+<EditForm Model="user" >
+    <div class="form-group">
+        <label for="Email">Email</label><br />
+        <InputText id="Email" @bind-Value="@user.Email" disabled="@IsDisabled" class="form-control"/>
+    </div><br />
+
+
+</EditForm>
+    </div>
+
+</div>
+
+
+
+}
+
+
+
+@code {
+    UserRegisterRequest user = new  UserRegisterRequest();
+    public List<Orders> Orders { get; set; } = new List<Orders>();
+
+    protected override void OnInitialized()
+    {
+      user = Localstorage.GetItem<UserRegisterRequest>("userinfo");
+
+
+    }
+
+
+    protected bool IsDisabled { get; set; }
+
+}
