@@ -38,7 +38,7 @@
         {
             @if (GetSelectedVariant().OriginalPrice > GetSelectedVariant().Price)
             {
-                <h6 class="text-muted original-price">R @(GetSelectedVariant().OriginalPrice * cartItem.Quantity)</h6>
+                <h6 class="original-price">R @(GetSelectedVariant().OriginalPrice * cartItem.Quantity)</h6>
             }
             <h4 class="price">
                 R @(GetSelectedVariant().Price * cartItem.Quantity) 
