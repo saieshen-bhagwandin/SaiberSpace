@@ -6,6 +6,8 @@
         event Action ProductsChanged;
         List<Product> Products { get; set; }
 
+        List<Product> Productsfororders { get; set; }
+
         Task GetProducts(string? categoryUrl = null);
 
         Task<ServiceResponse<Product>> GetProductByIdAsync(int productId);

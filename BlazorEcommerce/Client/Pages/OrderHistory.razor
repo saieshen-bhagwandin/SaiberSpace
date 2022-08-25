@@ -3,6 +3,7 @@
 @inject IOrderService orderService
 @inject ISyncLocalStorageService Localstorage
 @inject IProductService productService
+@inject ICategoryService categoryService
 
 
 <h3>Orders</h3><br />
@@ -29,7 +30,7 @@
 
       <tr>
            <td>@order.OrderNumber</td>
-           <td>@refactor(order.ProductIds,order.Quantity)</td>
+           <td>@productname(order.ProductIds,order.Quantity)</td>
            <td>@order.Date</td>
        </tr>
 
@@ -46,17 +47,19 @@
 
     public List<Orders> Orders { get; set; } = new List<Orders>();
     string productitles = "";
-
+    private static List<Product> Products = new List<Product>{ };
 
     protected override void OnInitialized()
     {
         orderService.OrdersChanged += StateHasChanged;
+        productService.ProductsChanged += StateHasChanged;
     }
 
 
     public void Dispose() { 
 
         orderService.OrdersChanged -= StateHasChanged;
+        productService.ProductsChanged -= StateHasChanged;
 
     }
 
@@ -70,22 +73,42 @@
 
     }
 
-    public async Task<string> productname(string id){
+
+    public string productname(string id,string quantity){
 
         string[] words = id.Split(',');
         string titles = "";
+         string[] q = quantity.Split(',');
 
-        for (var i = 1; i < 2; i++)
+        for (var i = 1; i < words.Length; i++)
         {
-            Product product = new Product();
             int theid = Int32.Parse(words[i]);
 
-            var result = await productService.GetProductByIdAsync(theid);
+            foreach (var product in productService.Productsfororders)
+            {
 
-            if (result.Data != null)
-                product = result.Data;
+                if (i == (words.Length - 1))
+                {
+                    if (theid == product.Id)
+                    {
+                        titles = titles + product.Title + "(x" + q[i] + ") " ;
+                    }
+                }
+                else
+                {
 
-            titles = titles + "," + product.Title;
+                    if (theid == product.Id)
+                    {
+
+                        titles = titles + product.Title + "(x" + q[i] + ") ,";
+
+                    }
+
+                }
+
+
+            }
+
 
         }
 
@@ -93,6 +116,7 @@
 
 
     }
+
 
     public string refactor(string id,string quantity){
 
