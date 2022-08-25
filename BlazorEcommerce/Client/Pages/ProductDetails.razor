@@ -38,16 +38,16 @@
         {
             @if (GetSelectedVariant().OriginalPrice > GetSelectedVariant().Price)
             {
-                <h6 class="text-muted original-price">R @GetSelectedVariant().OriginalPrice</h6>
+                <h6 class="text-muted original-price">R @(GetSelectedVariant().OriginalPrice * cartItem.Quantity)</h6>
             }
             <h4 class="price">
-                R @GetSelectedVariant().Price
+                R @(GetSelectedVariant().Price * cartItem.Quantity) 
             </h4> <br>
         }
           
              <EditForm Model="cartItem">
                <div class="form-group">
-                <InputNumber id="quantity" @bind-Value="cartItem.Quantity" class="form-control" style="width: 70px;" />
+                <InputNumber id="quantity" @bind-Value="cartItem.Quantity"  Min="1"  class="form-control" style="width: 70px;" />
                 </div>
               </EditForm> <br>
                <AuthorizeView>

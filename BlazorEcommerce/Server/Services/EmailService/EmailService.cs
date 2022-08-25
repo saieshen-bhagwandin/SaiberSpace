@@ -32,7 +32,7 @@ namespace BlazorEcommerce.Server.Services.EmailService
             email.Subject = "Your SaiberSpace order confirmed ";
             email.Body = new TextPart(TextFormat.Html)
             {
-                Text = "<h3>Thank you for your order!</h3 ><h4> Here's what you'll get : </h4><br>" + theitems(useremail)};
+                Text = "<head><style> td { text-align:center; }</style ></head><h3>Thank you for your order!</h3 ><h4> Here's what you'll get : </h4><br>" + theitems(useremail)};
 
             using var smtp = new SmtpClient();
             smtp.Connect(_configuration.GetSection("EmailHost").Value, 25, SecureSocketOptions.StartTls);
@@ -64,7 +64,7 @@ namespace BlazorEcommerce.Server.Services.EmailService
 
         public string theitems(EmailDTO email) {
 
-            string textBody = " <table border=" + 1 + " cellpadding=" + 1 + " cellspacing=" + 0 + " width = " + 400 + "><tr bgcolor='white'><th>Product</th> <th>Edition</th><th>Quantity</th><th>Price</th></tr>";
+            string textBody = " <table border=" + 1 + " cellpadding=" + 1 + " cellspacing=" + 0 + " width = " + 600 + "><tr bgcolor='white'><th>Product</th> <th>Edition</th><th>Quantity</th><th>Price</th></tr>";
 
            
             

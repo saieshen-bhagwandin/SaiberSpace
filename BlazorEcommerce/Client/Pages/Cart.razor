@@ -24,7 +24,7 @@
                         <span>@item.EditionName</span><br />
                        <button class="btn-delete" @onclick="@(() => DeleteItem(item))">Delete</button>
                         <EditForm Model="item">
-                            <InputNumber id="quantity" @bind-Value="item.Quantity"
+                            <InputNumber id="quantity"  Min="1" @bind-Value="item.Quantity"
                                          class="form-control" style="width: 70px" />
                         </EditForm>
                     </div>
