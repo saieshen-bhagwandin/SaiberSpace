@@ -66,8 +66,6 @@ namespace BlazorEcommerce.Server.Services.EmailService
 
             string textBody = " <table border=" + 1 + " cellpadding=" + 1 + " cellspacing=" + 0 + " width = " + 600 + "><tr bgcolor='white'><th>Product</th> <th>Edition</th><th>Quantity</th><th>Price</th></tr>";
 
-           
-            
             foreach (var item in email.cartItem)
             {
 

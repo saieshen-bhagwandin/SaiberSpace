@@ -26,8 +26,6 @@
 
    @foreach (var order in orderService.Orders)
 {
-
-
       <tr>
            <td>@order.OrderNumber</td>
            <td>@productname(order.ProductIds,order.Quantity)</td>
