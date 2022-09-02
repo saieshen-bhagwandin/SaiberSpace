@@ -24,8 +24,7 @@ namespace BlazorEcommerce.Server.Services.EmailService
 
         public void purchasedorder(EmailDTO useremail)
         {
-       
-   
+
             var email = new MimeMessage();
             email.From.Add(MailboxAddress.Parse(_configuration.GetSection("EmailUserName").Value));
             email.To.Add(MailboxAddress.Parse(useremail.user.Email));
@@ -64,16 +63,16 @@ namespace BlazorEcommerce.Server.Services.EmailService
 
         public string theitems(EmailDTO email) {
 
-            string textBody = " <table border=" + 1 + " cellpadding=" + 1 + " cellspacing=" + 0 + " width = " + 600 + "><tr bgcolor='white'><th>Product</th> <th>Edition</th><th>Quantity</th><th>Price</th></tr>";
+            string textBody = " <table border=" + 1 + " cellpadding=" + 1 + " cellspacing=" + 0 + " width = " + 600 + "><tr bgcolor='white'><th>Order Number</th><th>Product</th> <th>Edition</th><th>Quantity</th><th>Price</th></tr>";
 
             foreach (var item in email.cartItem)
             {
 
-                textBody += "<tr><td>" + item.ProductTitle + "</td><td> " + item.EditionName + "</td><td>" + item.Quantity + "</td><td>" + "R" + item.Price * item.Quantity + "</td></tr>";
+                textBody += "<tr><td>" + email.Ordernumber + "</td><td>" + item.ProductTitle + "</td><td> " + item.EditionName + "</td><td>" + item.Quantity + "</td><td>" + "R" + item.Price * item.Quantity + "</td></tr>";
             };
 
 
-            textBody += "<tr><th> Total ( " + email.cartItem.Count + ")</th><td></td><td></td><th>" + "R" + email.cartItem.Sum(item => item.Price * item.Quantity) + "</th></tr>";
+            textBody += "<tr><th> Total ( " + email.cartItem.Count + ")</th><td></td><td></td><td></td><th>" + "R" + email.cartItem.Sum(item => item.Price * item.Quantity) + "</th></tr>";
 
             textBody += "</table>";
 

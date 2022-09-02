@@ -11,7 +11,9 @@ namespace BlazorEcommerce.Shared
 
         public UserRegisterRequest user { get; set; }
         public List<CartItem> cartItem { get; set; }
-        
+
+        public string Ordernumber { get; set; } = String.Empty;
+
 
     }
 }

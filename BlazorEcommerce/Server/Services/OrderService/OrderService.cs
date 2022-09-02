@@ -45,7 +45,7 @@
 
                 await _context.SaveChangesAsync();
 
-                return "order was placed";
+                return "order was placed + " + ordernumber;
 
             }
             else

@@ -7,7 +7,5 @@
 
         Task<ServiceResponse<List<Orders>>> GetOrders(string email);
 
-
-
     }
 }

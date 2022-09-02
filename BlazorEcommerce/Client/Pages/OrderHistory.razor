@@ -24,9 +24,10 @@
 <th>Date</th>
  </tr>
 
-   @foreach (var order in orderService.Orders)
+   @foreach (var order in orderService.ROrders)
 {
       <tr>
+     
            <td>@order.OrderNumber</td>
            <td>@productname(order.ProductIds,order.Quantity)</td>
            <td>@order.Date</td>

@@ -32,6 +32,23 @@
     font-size: 12px;
 }
 
+.rotate {
+    animation: rotation 20s infinite linear;
+    cursor: pointer;
+    margin-top: 200px;
+}
+
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(359deg);
+    }
+}
+
 .btn-delete:hover {
         text-decoration: underline;
  }

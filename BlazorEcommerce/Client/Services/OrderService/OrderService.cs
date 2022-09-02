@@ -17,6 +17,7 @@ namespace BlazorEcommerce.Client.Services.OrderService
         }
 
         public List<Orders> Orders { get; set; } = new List<Orders>();
+        public List<Orders> ROrders { get; set; } = new List<Orders>();
 
         public event Action OrdersChanged;
 
@@ -40,6 +41,7 @@ namespace BlazorEcommerce.Client.Services.OrderService
             if (result != null && result.Data != null)
             {
                 Orders = result.Data;
+                ROrders = result.Data.OrderByDescending(c => c.Id).ToList();
             }
 
             OrdersChanged.Invoke();

@@ -100,8 +100,12 @@ else
 
         var result = await orderService.AddOrderAsync(emaildto);
 
-        if (result == "order was placed")
+        if (result != "something went wrong")
         {
+
+            string[] items = result.Split("+");
+
+            emaildto.Ordernumber = items[1];
 
             await CartService.purchaseAsync(emaildto);
 
