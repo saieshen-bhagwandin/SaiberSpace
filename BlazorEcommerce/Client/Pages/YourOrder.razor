@@ -1,0 +1,125 @@
+﻿@page "/order/{id:int}"
+@inject IProductService ProductService 
+@inject ILocalStorageService LocalstorageService
+@inject IToastService ToastService
+@inject ICartService CartService
+@inject ICategoryService categoryService
+@inject IOrderService orderService
+
+
+
+<h3>Order Number : @order.OrderNumber</h3><br />
+
+    <div>
+
+    @foreach (var item in cartItems)
+    {
+
+
+            <div class="item-container">
+                <div class="item-image-wrapper"><img src="@item.ImageUrl" class="item-image" /></div>
+                <div class="item-name">
+                    <h5><a href="/product/@item.Id">@item.Title</a></h5><br><br>
+                  
+                
+                     <b>Edition Name :</b> @categoryService.Editions[Int32.Parse(editionids[counter]) - 1 ].Name  <br>
+
+                    <b>Price :</b> R @(GetSelectedVariant(item,editionids[counter]).Price * Int32.Parse(quantities[counter])) 
+                </div>
+          
+                <span><b>Quantity :</b> @quantities[counter]</span><br />
+              
+            </div>
+
+           <div class="text-white"> @(counter++)  </div>
+
+        }
+  
+    </div>
+
+
+@code{
+
+    int counter = 1;
+    Orders order = new Orders();
+    List<Product> cartItems = new List<Product>();
+
+    List<Product> theproducts = new List<Product>();
+
+    List<Category> cats = new List<Category>();
+    string[] productids;
+    string[] editionids;
+    string[] quantities;
+
+    [Parameter]
+    public int Id {get;set;}
+
+    private int currentEditionId = 1;
+
+    protected async override Task OnInitializedAsync()
+    {
+        await categoryService.GetEditions();
+
+        theproducts = ProductService.Products;
+
+
+    }
+
+
+    protected override async Task OnParametersSetAsync() {
+
+        order = await orderService.GetOrderByIdAsync(Id);
+
+        productids = order.ProductIds.Split(',');
+
+        editionids = order.EidtionIds.Split(',');
+
+        quantities = order.Quantity.Split(',');
+
+
+        for (var i = 1; i < productids.Length; i++)
+        {
+            int theid = Int32.Parse(productids[i]);
+
+            foreach (var product in theproducts)
+            {
+
+                if (theid == product.Id)
+                {
+
+                    cartItems.Add(product);
+
+
+                }
+
+
+
+
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+
+    private ProductVariant GetSelectedVariant(Product product,string id)
+    {
+
+        int ID = Int32.Parse(id);
+
+        var variant = product.Variants.FirstOrDefault(v => v.EditionId == ID);
+
+        return variant;
+    }
+
+
+}

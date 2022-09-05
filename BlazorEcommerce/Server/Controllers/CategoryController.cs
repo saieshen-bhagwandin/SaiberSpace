@@ -21,7 +21,18 @@ namespace BlazorEcommerce.Server.Controllers
 
             return Ok(result);
         
-        }   
+        }
+
+
+        [HttpGet("getEdition")]
+        public async Task<ActionResult<ServiceResponse<List<Edition>>>> GetEditions()
+        {
+
+            var result = await _categoryService.GetEditions();
+
+            return Ok(result);
+
+        }
 
     }
 }

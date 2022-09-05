@@ -31,7 +31,8 @@ namespace BlazorEcommerce.Server.Services.EmailService
             email.Subject = "Your SaiberSpace order confirmed ";
             email.Body = new TextPart(TextFormat.Html)
             {
-                Text = "<head><style> td { text-align:center; }</style ></head><h3>Thank you for your order!</h3 ><h4> Here's what you'll get : </h4><br>" + theitems(useremail)};
+                Text = "<head><style> td { text-align:center; }</style ></head><h3>Thank you for your order!</h3 ><h4> Here's what you'll get : </h4><br>" + theitems(useremail)
+            };
 
             using var smtp = new SmtpClient();
             smtp.Connect(_configuration.GetSection("EmailHost").Value, 25, SecureSocketOptions.StartTls);
@@ -50,7 +51,7 @@ namespace BlazorEcommerce.Server.Services.EmailService
             email.From.Add(MailboxAddress.Parse(_configuration.GetSection("EmailUserName").Value));
             email.To.Add(MailboxAddress.Parse(user.Email));
             email.Subject = "SaiberSpace - Verfication";
-            email.Body = new TextPart(TextFormat.Html) { Text = "Hello new user, use the verication code : " + user.VerificationToken + " to verify your new account" };
+            email.Body = new TextPart(TextFormat.Html) { Text = "Hello new user, use the verication code : <br><br>" + user.VerificationToken + " to verify your new account" };
 
             using var smtp = new SmtpClient();
             smtp.Connect(_configuration.GetSection("EmailHost").Value, 25, SecureSocketOptions.StartTls);

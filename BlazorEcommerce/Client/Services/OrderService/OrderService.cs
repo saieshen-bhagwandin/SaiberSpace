@@ -49,5 +49,13 @@ namespace BlazorEcommerce.Client.Services.OrderService
            
 
         }
+
+        public async Task<Orders> GetOrderByIdAsync(int id)
+        {
+            var result = await _http.GetFromJsonAsync<Orders>($"api/order/{id}");
+
+            return result;
+
+        }
     }
 }

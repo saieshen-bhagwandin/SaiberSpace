@@ -109,9 +109,9 @@ else
 
             await CartService.purchaseAsync(emaildto);
 
-            await CartService.EmptyCart();
+            ToastService.ShowSuccess("Email has been sent to confirm order", "Purchase Success");
 
-             ToastService.ShowSuccess("Email has been sent to confirm order", "Purchase Success");
+            await CartService.EmptyCart();
 
         }else{
         

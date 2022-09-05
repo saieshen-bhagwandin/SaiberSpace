@@ -1,0 +1,69 @@
+﻿.item-container {
+    display: flex;
+    padding: 6px
+}
+
+.item-image-wrapper {
+    width: 150px;
+    text-align: center;
+}
+
+.item-image {
+    max-height: 150px;
+    max-width: 150px;
+    padding: 6px;
+}
+
+.item-name {
+    flex-grow: 1;
+    padding: 6px;
+}
+
+.item-price {
+    font-weight: 600;
+    text-align: right;
+}
+
+.btn-delete {
+    background: none;
+    border: none;
+    padding: 0px;
+    color: red;
+    font-size: 12px;
+}
+
+.rotate {
+    animation: rotation 20s infinite linear;
+    cursor: pointer;
+    margin-top: 200px;
+}
+
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(359deg);
+    }
+}
+
+.btn-delete:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 1023.98px) {
+    .media {
+        flex-direction: column;
+    }
+
+    .media-img {
+        max-width: 300px;
+    }
+
+    .media-img-wrapper {
+        width: 100%;
+        height: auto;
+    }
+}

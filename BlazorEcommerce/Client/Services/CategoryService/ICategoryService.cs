@@ -7,5 +7,10 @@
 
         Task GetCategories();
 
+
+        public List<Edition> Editions { get; set; }
+
+        Task GetEditions();
+
     }
 }

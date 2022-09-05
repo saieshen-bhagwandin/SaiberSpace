@@ -11,5 +11,7 @@
         Task<string> AddOrderAsync(EmailDTO email);
 
         Task GetOrder(string email);
+
+        Task<Orders> GetOrderByIdAsync(int id);
     }
 }

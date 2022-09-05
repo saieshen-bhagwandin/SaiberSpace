@@ -56,6 +56,13 @@
             }
         }
 
+        public async Task<Orders> GetOrderByIdAsync(int orderId)
+        {
+        
+            var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == orderId);
+
+            return order;
+        }
 
         public string getordernumber() {
 

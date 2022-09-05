@@ -7,5 +7,7 @@
 
         Task<ServiceResponse<List<Orders>>> GetOrders(string email);
 
+        Task<Orders> GetOrderByIdAsync(int orderId);
+
     }
 }

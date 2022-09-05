@@ -10,6 +10,7 @@
         }
 
         public List<Category> Categories { get; set; } = new List<Category>();
+        public List<Edition> Editions { get; set ; }
 
         public async Task GetCategories()
         {
@@ -17,6 +18,14 @@
 
             if (response != null && response.Data != null)
                 Categories = response.Data;
+        }
+
+        public async Task GetEditions()
+        {
+            var response = await _http.GetFromJsonAsync<ServiceResponse<List<Edition>>>("api/category/getEdition");
+
+            if (response != null && response.Data != null)
+                Editions = response.Data;
         }
     }
 }

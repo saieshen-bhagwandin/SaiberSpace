@@ -21,5 +21,19 @@
 
 
         }
+
+
+        public async Task<ServiceResponse<List<Edition>>> GetEditions()
+        {
+            var editions = await _context.Editions.ToListAsync();
+            return new ServiceResponse<List<Edition>>
+            {
+
+                Data = editions
+
+            };
+
+
+        }
     }
 }

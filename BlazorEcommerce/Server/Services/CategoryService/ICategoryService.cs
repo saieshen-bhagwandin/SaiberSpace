@@ -4,5 +4,7 @@
     {
 
         Task<ServiceResponse<List<Category>>> GetCategories();
+
+        Task<ServiceResponse<List<Edition>>> GetEditions();
     }
 }
