@@ -6,9 +6,14 @@
 @inject ICategoryService categoryService
 @inject IOrderService orderService
 
+@if (order == null)
+{
+    <center><img class="rotate" src="Images/loading.png" alt="failed" /></center>
 
 
-<h3>Order Number : @order.OrderNumber</h3><br />
+}else{
+
+<h3>Order Number : #@order.OrderNumber</h3><br />
 
     <div>
 
@@ -36,6 +41,8 @@
         }
   
     </div>
+
+    }
 
 
 @code{
