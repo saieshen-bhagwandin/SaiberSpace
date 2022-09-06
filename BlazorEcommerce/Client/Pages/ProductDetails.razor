@@ -3,6 +3,7 @@
 @inject ILocalStorageService LocalstorageService
 @inject IToastService ToastService
 @inject ICartService CartService
+@inject ICategoryService categoryservice
 
 @if (product == null)
 {
@@ -11,7 +12,7 @@
 
 }else{
 
-
+<h3>Category : @getcategory(product.CategoryId) </h3><br /><br /><br />
 
     <div class="media">
     <div class="media-img-big-wrapper mr-2">
@@ -60,10 +61,7 @@
 
 </div>
 
-
-
 }
-
 
 
 @code {
@@ -76,6 +74,12 @@
 
     [Parameter]
     public int Id {get;set;}
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await categoryservice.GetCategories();
+    }
 
     protected override async Task OnParametersSetAsync() {
 
@@ -115,6 +119,33 @@
         await CartService.AddToCart(cartItem);
 
     }
+
+
+
+    public string getcategory(int id) { 
+
+
+        foreach (var item in categoryservice.Categories)
+        {
+
+            if (item.Id == id) {
+
+
+                return item.Name;
+
+            }
+
+        }
+
+
+        return "None";
+
+    
+    }
+
+
+
+
 
 
 
