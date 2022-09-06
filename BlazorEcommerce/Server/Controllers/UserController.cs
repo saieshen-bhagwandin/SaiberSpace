@@ -18,9 +18,17 @@ namespace BlazorEcommerce.Server.Controllers
         [HttpPost("register")]
         public async Task<string> Register(UserRegisterRequest request) {
 
-            var result = await _userService.AddUserAsync(request);
+            try
+            {
+                var result = await _userService.AddUserAsync(request);
 
-            return result;
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
 
 
         }
@@ -30,15 +38,24 @@ namespace BlazorEcommerce.Server.Controllers
         public async Task<User> Login(UserLoginRequest request)
         {
 
-            var result = await _userService.LoginAsync(request);
+            try
+            {
+                var result = await _userService.LoginAsync(request);
 
-            if (result.Id == 0) {
+                if (result.Id == 0)
+                {
+
+                    return result;
+
+                }
 
                 return result;
 
             }
-
-            return result;
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
 
         }
 
@@ -47,9 +64,19 @@ namespace BlazorEcommerce.Server.Controllers
         public async Task<string> Verify(VerifyModel token)
         {
 
-            var result = await _userService.VerifyAsync(token);
+            try
+            {
+                var result = await _userService.VerifyAsync(token);
 
-            return result;
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+
         }
 
 

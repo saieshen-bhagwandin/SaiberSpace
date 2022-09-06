@@ -2,10 +2,34 @@
 @inject IUserService UserService
 @inject HttpClient Http
 @inject IToastService ToastService
+@inject NavigationManager NavigationManager
 
 <h3>Register</h3><br />
 
 <EditForm Model="user" OnSubmit="HandleRegister">
+        <div class="form-group">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+        <label for="Name">Name</label><br />
+        <InputText id="Name" @bind-Value="user.Name" required class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div><br />
+        <div class="form-group">
+        <label for="Surname">Surname</label><br />
+        <InputText id="Surname" @bind-Value="user.Surname" required class="form-control" />
+        <span asp-validation-for="Surname" class="text-danger"></span>
+    </div><br />
+            <div class="form-group">
+        <label for="StreetAddress">Street Address</label><br />
+        <InputText id="StreetAddress" @bind-Value="user.StreetAddress" required class="form-control" />
+    </div><br />
+
+            <div class="form-group">
+        <label for="Suburb">Suburb</label><br />
+        <InputText id="Suburb" @bind-Value="user.Suburb" class="form-control" />
+    </div><br />
     <div class="form-group">
         <label for="Email">Email</label><br />
         <InputText id="Email" @bind-Value="user.Email" type = "email" required class="form-control" />
@@ -27,19 +51,27 @@
     private async void HandleRegister()
     {
         if (user.ConfirmPassword == user.Password)
-        {
+         {
             var result = await UserService.AddUserAsync(user);
 
-            if (result == "User already exists")
+            if (result == "User successfully created")
+            {
+            
+            ToastService.ShowSuccess("Welcome New User", "Successful Register");
+
+              NavigationManager.NavigateTo("/login");
+            
+
+            }else if(result == "User already exists")
             {
 
                 ToastService.ShowError("User already exists", "Registration failed");
 
             }
-            else
+            else if (result != "User successfully created")
             {
 
-                ToastService.ShowSuccess("Welcome New User", "Successful Register");
+                 ToastService.ShowError("User already exists", "Registration failed");
             }
         }
         else { 

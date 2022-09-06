@@ -34,7 +34,11 @@ namespace BlazorEcommerce.Server.Services.UserService
                 Email = request.Email,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
-                VerificationToken = CreateRandomToken()
+                VerificationToken = CreateRandomToken(),
+                StreetAddress = request.StreetAddress,
+                Suburb = request.Suburb,
+                Name = request.Name,
+                Surname = request.Surname
 
             };
 

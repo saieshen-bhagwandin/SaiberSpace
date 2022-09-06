@@ -21,12 +21,18 @@ namespace BlazorEcommerce.Server.Controllers
         [HttpPost("purchaseemail")]
         public IActionResult SendEmail(EmailDTO email) {
 
+            try
+            {
 
-            _emailService.purchasedorder(email);
+                _emailService.purchasedorder(email);
 
-       
-            return Ok();
+                return Ok();
 
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
 

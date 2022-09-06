@@ -49,12 +49,16 @@
 
             answer.Token = user.LoginToken;
             answer.Password = "*********";
+            answer.Name = user.Name;
+            answer.Surname = user.Surname;
+            answer.StreetAddress = user.StreetAddress;
+            answer.Suburb = user.Suburb;
 
         await LocalStorage.SetItemAsync("userinfo", answer);
         await AuthStateProvider.GetAuthenticationStateAsync();
         NavigationManager.NavigateTo("");
 
-       ToastService.ShowSuccess("Welcome User", "Successful Login");
+       ToastService.ShowSuccess("Welcome " + answer.Name, "Successful Login");
 
     }
 

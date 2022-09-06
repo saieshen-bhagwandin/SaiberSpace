@@ -19,9 +19,18 @@ namespace BlazorEcommerce.Server.Controllers
 
         public async Task<ActionResult<ServiceResponse<List<Product>>>> GetProducts() {
 
-            var result = await _productService.GetProductsAsync();
 
-            return Ok(result);
+            try
+            {
+                var result = await _productService.GetProductsAsync();
+
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
 
         }
 
@@ -31,9 +40,18 @@ namespace BlazorEcommerce.Server.Controllers
         public async Task<ActionResult<ServiceResponse<Product>>> GetProductById(int productId)
         {
 
-            var result = await _productService.GetProductByIdAsync(productId);
+            try
+            {
 
-            return Ok(result);
+                var result = await _productService.GetProductByIdAsync(productId);
+
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
 
         }
 
@@ -42,9 +60,17 @@ namespace BlazorEcommerce.Server.Controllers
         public async Task<ActionResult<ServiceResponse<Product>>> GetProductByCategory(string categoryUrl)
         {
 
-            var result = await _productService.GetProductsByCategoryAsync(categoryUrl);
+            try
+            {
+                var result = await _productService.GetProductsByCategoryAsync(categoryUrl);
 
-            return Ok(result);
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
 
         }
 
@@ -54,9 +80,17 @@ namespace BlazorEcommerce.Server.Controllers
         public async Task<ActionResult<List<Product>>> SearchProduct(string searchtext)
         {
 
-            var result = await _productService.SearchProduct(searchtext);
+            try
+            {
+                var result = await _productService.SearchProduct(searchtext);
 
-            return Ok(result);
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
 
         }
 

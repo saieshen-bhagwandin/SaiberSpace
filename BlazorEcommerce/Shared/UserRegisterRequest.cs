@@ -20,5 +20,19 @@ namespace BlazorEcommerce.Shared
         public string ConfirmPassword { get; set; } = string.Empty;
 
 
+        [Display(Name = "Name")]
+        [Required, RegularExpression("[a-zA-Z]+", ErrorMessage = "Name is invalid")]
+        public string Name { get; set; } = string.Empty;
+
+        [Display(Name = "Surname")]
+        [Required, RegularExpression("[a-zA-Z]+",ErrorMessage = "Surname is invalid")]
+        public string Surname { get; set; } = string.Empty;
+
+        [Required]
+        public string StreetAddress { get; set; } = string.Empty;
+
+        public string Suburb { get; set; } = string.Empty;
+
+
     }
 }

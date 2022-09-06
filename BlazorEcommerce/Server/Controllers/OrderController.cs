@@ -22,9 +22,19 @@ namespace BlazorEcommerce.Server.Controllers
      
         public async Task<string> AddToOrder(EmailDTO email)
         {
-           var result = await _orderService.AddOrderAsync(email);
 
-            return result;
+            try
+            {
+
+                var result = await _orderService.AddOrderAsync(email);
+
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
 
         }
 
@@ -34,9 +44,18 @@ namespace BlazorEcommerce.Server.Controllers
         public async Task<ActionResult<ServiceResponse<List<Orders>>>> GetOrders(string email)
         {
 
-            var result = await _orderService.GetOrders(email);
+            try
+            {
 
-            return Ok(result);
+                var result = await _orderService.GetOrders(email);
+
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
 
         }
 
@@ -46,9 +65,17 @@ namespace BlazorEcommerce.Server.Controllers
         public async Task<ActionResult<Orders>> GetProductById(int orderId)
         {
 
-            var result = await _orderService.GetOrderByIdAsync(orderId);
+            try
+            {
 
-            return Ok(result);
+                var result = await _orderService.GetOrderByIdAsync(orderId);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
 
         }
 

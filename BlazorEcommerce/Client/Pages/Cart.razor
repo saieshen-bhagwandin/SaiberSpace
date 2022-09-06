@@ -3,6 +3,7 @@
 @inject IOrderService orderService
 @inject ISyncLocalStorageService Localstorage
 @inject IToastService ToastService
+@inject NavigationManager NavigationManager
 
 @if (!orderPlaced)
 {
@@ -62,6 +63,18 @@ else
             Total (@cartItems.Count): R @cartItems.Sum(item => item.Price * item.Quantity)
         </div>
     </div>
+
+
+   
+     @if (user !=null)
+    {
+     <br> <br> <br> <br>
+     <h3><b>Address : </b></h3> @user.StreetAddress <br>
+      @user.Suburb
+    }
+   
+
+
 }
 
 
@@ -70,11 +83,15 @@ else
 @code {
     List<CartItem> cartItems = new List<CartItem>();
     bool orderPlaced = false;
+    UserRegisterRequest user = new UserRegisterRequest();
 
 
     protected override async Task OnInitializedAsync()
     {
         cartItems = await CartService.GetCartItems();
+       
+
+
     }
 
     private async Task DeleteItem(CartItem item)
@@ -87,7 +104,19 @@ else
     {
         orderPlaced = true;
 
-        var user = Localstorage.GetItem<UserRegisterRequest>("userinfo");
+         user = Localstorage.GetItem<UserRegisterRequest>("userinfo");
+
+
+        if (user == null)
+        {
+
+            ToastService.ShowError("Transaction Failed", "Please login before making any purchases");
+
+            NavigationManager.NavigateTo("/login");
+
+        }else{
+
+
 
         EmailDTO emaildto = new EmailDTO();
 
@@ -113,10 +142,15 @@ else
 
             await CartService.EmptyCart();
 
-        }else{
-        
-        ToastService.ShowError(result, "Purchase failed");
-        
+        }
+        else
+        {
+
+            ToastService.ShowError(result, "Purchase failed");
+
+        }
+
+
         }
 
     }

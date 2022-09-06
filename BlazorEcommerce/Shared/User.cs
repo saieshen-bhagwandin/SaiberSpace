@@ -25,6 +25,13 @@ namespace BlazorEcommerce.Shared
 
         public string LoginToken { get; set; }  = string.Empty;
 
+        public string Name { get; set; } = string.Empty;
+
+        public string Surname { get; set; } = string.Empty;
+
+        public string StreetAddress { get; set; } = string.Empty;
+
+        public string Suburb { get; set; } = string.Empty;
 
     }
 }

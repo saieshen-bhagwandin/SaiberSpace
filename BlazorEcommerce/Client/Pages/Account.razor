@@ -19,9 +19,30 @@
     </div> 
     <div class="media-body">
 <EditForm Model="accountDetails" >
+
+        <div class="form-group">
+        <label for="Name">Name</label><br />
+        <InputText id="Name" @bind-Value="@accountDetails.user.Name" disabled="@(this.isDisable = true)" class="form-control"/>
+    </div><br />
+
+        <div class="form-group">
+        <label for="Surname">Surname</label><br />
+        <InputText id="Surname" @bind-Value="@accountDetails.user.Surname" disabled="@(this.isDisable = true)" class="form-control"/>
+    </div><br />
+
     <div class="form-group">
         <label for="Email">Email</label><br />
         <InputText id="Email" @bind-Value="@accountDetails.user.Email" disabled="@(this.isDisable = true)" class="form-control"/>
+    </div><br />
+
+        <div class="form-group">
+        <label for="StreetAddress">Street Address</label><br />
+        <InputText id="StreetAddress" @bind-Value="@accountDetails.user.StreetAddress" disabled="@(this.isDisable = true)" class="form-control"/>
+    </div><br />
+
+        <div class="form-group">
+        <label for="Suburb">Suburb</label><br />
+        <InputText id="Suburb" @bind-Value="@accountDetails.user.Suburb" disabled="@(this.isDisable = true)" class="form-control"/>
     </div><br />
 
         <div class="form-group">

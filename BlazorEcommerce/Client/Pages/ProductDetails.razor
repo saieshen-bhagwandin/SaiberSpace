@@ -52,11 +52,9 @@
                 <InputNumber id="quantity" @bind-Value="cartItem.Quantity"  Min="1"  class="form-control" style="width: 70px;" />
                 </div>
               </EditForm> <br>
-               <AuthorizeView>
-                 <Authorized>
+         
               <button class="btn btn-primary" @onclick="AddToCart" ><i class="oi oi-cart"></i>&nbsp;&nbsp;&nbsp;Add to Cart</button>
-            </Authorized>
-        </AuthorizeView>
+     
     </div>
 
 </div>

@@ -17,10 +17,19 @@ namespace BlazorEcommerce.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<ServiceResponse<List<Category>>>> GetCategories() { 
         
-        var result = await _categoryService.GetCategories();
+            try
+            {
 
-            return Ok(result);
-        
+                var result = await _categoryService.GetCategories();
+
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+               throw new Exception(ex.Message);
+            }
+
         }
 
 
@@ -28,9 +37,18 @@ namespace BlazorEcommerce.Server.Controllers
         public async Task<ActionResult<ServiceResponse<List<Edition>>>> GetEditions()
         {
 
-            var result = await _categoryService.GetEditions();
+            try
+            {
 
-            return Ok(result);
+                var result = await _categoryService.GetEditions();
+
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
 
         }
 
