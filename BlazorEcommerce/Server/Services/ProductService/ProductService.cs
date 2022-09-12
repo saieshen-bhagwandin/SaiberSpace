@@ -34,10 +34,22 @@
         public async Task<ServiceResponse<List<Product>>> GetProductsAsync()
         {
 
+            var products = await _context.Products.FromSqlRaw("GetAllProducts").ToListAsync();
+
+            foreach (var item in products)
+            {
+               var listofvariants = await _context.ProductVariant.FromSqlRaw($"GetAllVariants {item.Id}").ToListAsync();
+
+
+                item.Variants.Concat(listofvariants);
+
+            }
+           
+
             var response = new ServiceResponse<List<Product>>()
             {
 
-                Data = await _context.Products.Include(p => p.Variants).ToListAsync(),
+                Data = products,
 
             };
 
@@ -60,7 +72,7 @@
 
         public async Task<List<Product>> SearchProduct(string searchtext)
         {
-            return await _context.Products.Where(p => p.Title.Contains(searchtext) || p.Description.Contains(searchtext)).ToListAsync(); 
+            return await _context.Products.FromSqlRaw($"Search {searchtext}").ToListAsync();
         }
     }
 }

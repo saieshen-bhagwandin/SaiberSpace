@@ -1,4 +1,5 @@
 ﻿using BlazorEcommerce.Shared;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,7 +37,7 @@ namespace BlazorEcommerce.Server.Controllers
 
 
         [HttpGet("{productId}")]
-
+      
         public async Task<ActionResult<ServiceResponse<Product>>> GetProductById(int productId)
         {
 

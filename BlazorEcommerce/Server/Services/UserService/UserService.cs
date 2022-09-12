@@ -137,7 +137,8 @@ namespace BlazorEcommerce.Server.Services.UserService
             {
 
                 new Claim(ClaimTypes.Email, user.Email),
-                 new Claim(ClaimTypes.Role, "Admin")
+                 new Claim(ClaimTypes.Role, "Admin"),
+                 new Claim(ClaimTypes.NameIdentifier, user.Name)
 
 
             };

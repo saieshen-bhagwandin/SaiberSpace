@@ -27,8 +27,12 @@ namespace BlazorEcommerce.Client.Services.UserService
         {
             var result = await _httpClient.PostAsJsonAsync("api/user/login", request);
 
-            var resultString = await result.Content.ReadFromJsonAsync<User>();    
+            var resultString = await result.Content.ReadFromJsonAsync<User>();
 
+
+            _httpClient.DefaultRequestHeaders.Add("Bearer", resultString.LoginToken);
+
+          
             return resultString;
 
         }
